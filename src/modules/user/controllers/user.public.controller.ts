@@ -1,5 +1,4 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
 import { ApiTags } from '@nestjs/swagger';
 import {
     UserPublicLoginDoc,
@@ -21,5 +20,13 @@ export class UserPublicController {
     @Post('/register')
     async register(@Body() payload: UserRegisterDTO) {
         return await this.userService.register(payload);
+    }
+
+    @UserPublicLoginDoc()
+    @Response('user.login', { serialization: UserLoginSerialization })
+    @HttpCode(HttpStatus.OK)
+    @Post('/login')
+    async login(@Body() payload: UserLoginDTO) {
+        return await this.userService.login(payload);
     }
 }

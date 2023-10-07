@@ -1,12 +1,26 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+    BadRequestException,
+    ConflictException,
+    ForbiddenException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { AuthService } from 'src/core/auth/services/auth.service';
-import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
+import {
+    ENUM_USER_STATUS_CODE_ERROR,
+    ENUM_USER_STATUS_CODE_SUCCESS,
+} from '../constants/user.status-code.constant';
 import { UserEntity } from '../entities/user.entity';
-import { ENUM_USER_TYPE } from '../constants/user.enum.constant';
-import { instanceToPlain } from 'class-transformer';
+import {
+    ENUM_USER_STATUS,
+    ENUM_USER_TYPE,
+} from '../constants/user.enum.constant';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserLoginDTO } from '../dtos/user.login.dto';
+import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
+import { ENUM_AUTH_LOGIN_WITH } from 'src/core/auth/constants/auth.enum.constant';
 
 @Injectable()
 export class UserService {
@@ -20,7 +34,7 @@ export class UserService {
         return await this.userRepo.findOne({ where: { username } });
     }
 
-    async register(payload: UserRegisterDTO) {
+    async register(payload: UserRegisterDTO): Promise<UserEntity> {
         const { username, password } = payload;
 
         const isUsernameExist = await this.userRepo.findOne({
@@ -42,7 +56,90 @@ export class UserService {
             type: ENUM_USER_TYPE.PARKING_AGENT,
         });
 
-        const userCreated = await this.userRepo.save(user);
-        return instanceToPlain(userCreated);
+        return await this.userRepo.save(user);
+    }
+
+    async login(payload: UserLoginDTO) {
+        const { username, password } = payload;
+        const user = await this.getByUsername(username);
+        if (!username) {
+            throw new NotFoundException({
+                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_NOT_FOUND_ERROR,
+                message: 'user.error.notFound',
+            });
+        }
+
+        const validate: boolean = await this.authService.validateUser(
+            password,
+            user.password.passwordHash
+        );
+
+        if (!validate) {
+            throw new BadRequestException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_PASSWORD_NOT_MATCH_ERROR,
+                message: 'user.error.passwordNotMatch',
+            });
+        }
+
+        if (user.status !== ENUM_USER_STATUS.ACTIVE) {
+            throw new ForbiddenException({
+                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_INACTIVE_ERROR,
+                message: 'user.error.inactive',
+            });
+        }
+
+        const tokenType: string = await this.authService.getTokenType();
+        const expiresIn: number =
+            await this.authService.getAccessTokenExpirationTime();
+        const payloadAccessToken: Record<string, any> =
+            await this.authService.createPayloadAccessToken(user);
+        const payloadRefreshToken: Record<string, any> =
+            await this.authService.createPayloadRefreshToken(user.id, {
+                loginWith: ENUM_AUTH_LOGIN_WITH.LOCAL,
+            });
+
+        const payloadEncryption = await this.authService.getPayloadEncryption();
+        let payloadHashedAccessToken: Record<string, any> | string =
+            payloadAccessToken;
+        let payloadHashedRefreshToken: Record<string, any> | string =
+            payloadRefreshToken;
+
+        if (payloadEncryption) {
+            payloadHashedAccessToken =
+                await this.authService.encryptAccessToken(payloadAccessToken);
+            payloadHashedRefreshToken =
+                await this.authService.encryptRefreshToken(payloadRefreshToken);
+        }
+
+        const accessToken: string = await this.authService.createAccessToken(
+            payloadHashedAccessToken
+        );
+
+        const refreshToken: string = await this.authService.createRefreshToken(
+            payloadHashedRefreshToken
+        );
+
+        const checkPasswordExpired: boolean =
+            await this.authService.checkPasswordExpired(
+                user.password.passwordExpired
+            );
+
+        if (checkPasswordExpired) {
+            throw new ForbiddenException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_SUCCESS.USER_PASSWORD_EXPIRED_ERROR,
+                message: 'user.error.passwordExpired',
+            });
+        }
+
+        return {
+            data: {
+                tokenType,
+                expiresIn,
+                accessToken,
+                refreshToken,
+            },
+        };
     }
 }

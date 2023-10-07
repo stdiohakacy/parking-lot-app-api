@@ -1,3 +1,4 @@
+import { ConflictException } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
@@ -19,15 +20,16 @@ import { RequestModule } from 'src/core/request/request.module';
 import { ResponseModule } from 'src/core/response/response.module';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
 import { UserService } from 'src/modules/user/services/user.service';
-import { DataSource } from 'typeorm';
-import { addTransactionalDataSource } from 'typeorm-transactional';
+import { userStub } from './stubs/user.stub';
 
 describe('The User Service', () => {
     let userService: UserService;
     let findOne: jest.Mock;
+    let save: jest.Mock;
 
     beforeEach(async () => {
         findOne = jest.fn();
+        save = jest.fn();
         const module = await Test.createTestingModule({
             imports: [
                 ConfigModule.forRoot({
@@ -185,35 +187,84 @@ describe('The User Service', () => {
                 UserService,
                 {
                     provide: getRepositoryToken(UserEntity),
-                    useValue: { findOne },
+                    useValue: { findOne, save },
                 },
             ],
         }).compile();
         userService = await module.get(UserService);
     });
 
-    describe('when getting a user by username', () => {
-        describe('and the user is matched', () => {
+    describe('User service should be defined', () => {
+        it('should be defined', () => {
+            expect(userService).toBeDefined();
+        });
+    });
+
+    describe('Get user by username', () => {
+        describe('User is match', () => {
             let user: UserEntity;
             beforeEach(() => {
                 user = new UserEntity();
                 findOne.mockReturnValue(Promise.resolve(user));
             });
 
-            it('should return the user', async () => {
+            it('Should return user', async () => {
                 const fetchedUser = await userService.getByUsername('admin');
                 expect(fetchedUser).toEqual(user);
             });
         });
 
-        describe('and the user is not matched', () => {
+        describe('User is not match', () => {
             beforeEach(() => {
                 findOne.mockReturnValue(undefined);
             });
-            it('should return undefined', async () => {
+            it('Should return undefined', async () => {
                 const fetchedUser = await userService.getByUsername('admin');
                 await expect(fetchedUser).toEqual(undefined);
             });
+        });
+    });
+
+    describe('Register user', () => {
+        it('Should throw ConflictException if username already exists', async () => {
+            const existingUsername = 'existingUser';
+            const userRegisterDTO = {
+                username: 'existingUser',
+                password: 'cdef3456@A',
+                name: 'Terrence Powlowski-Jacobi',
+                address: '386 Luciano Fort Curtisworth 95966 Cambodia',
+                email: 'Trever80@gmail.com',
+                phone: '1-214-747-7267 x4565',
+            };
+
+            findOne.mockReturnValue(
+                Promise.resolve({ username: existingUsername })
+            );
+
+            try {
+                await userService.register(userRegisterDTO);
+                fail('Expected ConflictException was not thrown.');
+            } catch (error) {
+                expect(error).toBeInstanceOf(ConflictException);
+            }
+        });
+
+        it('Should create and return user', async () => {
+            const userRegisterDTO = {
+                username: 'user',
+                password: 'cdef3456@A',
+                name: 'Terrence Powlowski-Jacobi',
+                address: '386 Luciano Fort Curtisworth 95966 Cambodia',
+                email: 'Trever80@gmail.com',
+                phone: '1-214-747-7267 x4565',
+            };
+
+            jest.spyOn(userService, 'register').mockImplementationOnce(() =>
+                Promise.resolve(userStub())
+            );
+
+            const userRegistered = await userService.register(userRegisterDTO);
+            expect(userRegistered).toEqual(userStub());
         });
     });
 });
