@@ -8,7 +8,7 @@ import { UserPublicController } from 'src/modules/user/controllers/user.public.c
 import { UserModule } from 'src/modules/user/user.module';
 
 @Module({
-    imports: [CqrsModule, UserModule, TerminusModule, HealthModule],
+    imports: [CqrsModule, UserModule, TerminusModule, HealthModule, UserModule],
     controllers: [
         HealthPublicController,
         MessagePublicController,

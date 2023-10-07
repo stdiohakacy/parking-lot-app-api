@@ -42,7 +42,7 @@ export class UserDTO extends BaseDTO {
         required: true,
     })
     @IsNotEmpty()
-    @IsPasswordStrong()
+    // @IsPasswordStrong()
     @MaxLength(50)
     password: string;
 
@@ -98,11 +98,11 @@ export class UserDTO extends BaseDTO {
     })
     @IsString()
     @IsOptional()
-    @MinLength(10)
-    @MaxLength(14)
+    // @MinLength(10)
+    // @MaxLength(14)
     @ValidateIf((e) => e.mobileNumber !== '')
     @Type(() => String)
-    @MobileNumberAllowed()
+    // @MobileNumberAllowed()
     phone: string;
 
     @ApiProperty({

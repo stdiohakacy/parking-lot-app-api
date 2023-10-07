@@ -2,33 +2,32 @@ import { ConfigModule } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import Joi from 'joi';
+import { APP_LANGUAGE } from 'src/app/constants/app.constant';
+import { ENUM_APP_ENVIRONMENT } from 'src/app/constants/app.enum.constant';
+import configs from 'src/configs';
 import { ApiKeyModule } from 'src/core/api-key/api-key.module';
 import { AuthCoreModule } from 'src/core/auth/auth.core.module';
-import { AuthService } from 'src/core/auth/services/auth.service';
 import { DatabaseOptionsModule } from 'src/core/database/database.options.module';
 import { DatabaseOptionService } from 'src/core/database/services/database.options.service';
 import { DebuggerModule } from 'src/core/debugger/debugger.module';
 import { ErrorModule } from 'src/core/error/error.module';
 import { HelperModule } from 'src/core/helper/helper.module';
+import { ENUM_MESSAGE_LANGUAGE } from 'src/core/message/constants/message.enum.constant';
 import { MessageModule } from 'src/core/message/message.module';
 import { PaginationModule } from 'src/core/pagination/pagination.module';
 import { RequestModule } from 'src/core/request/request.module';
 import { ResponseModule } from 'src/core/response/response.module';
-import { UserRepository } from 'src/modules/user/repositories/user.repository';
+import { UserEntity } from 'src/modules/user/entities/user.entity';
 import { UserService } from 'src/modules/user/services/user.service';
-import { UserModule } from 'src/modules/user/user.module';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
-import configs from 'src/configs';
-import { ENUM_APP_ENVIRONMENT } from 'src/app/constants/app.enum.constant';
-import { ENUM_MESSAGE_LANGUAGE } from 'src/core/message/constants/message.enum.constant';
-import { APP_LANGUAGE } from 'src/app/constants/app.constant';
-import { UserEntity } from 'src/modules/user/entities/user.entity';
 
 describe('The User Service', () => {
     let userService: UserService;
+    let findOne: jest.Mock;
 
     beforeEach(async () => {
+        findOne = jest.fn();
         const module = await Test.createTestingModule({
             imports: [
                 ConfigModule.forRoot({
@@ -167,18 +166,9 @@ describe('The User Service', () => {
 
                 TypeOrmModule.forRootAsync({
                     imports: [DatabaseOptionsModule],
-                    useFactory: (dbOptionService: DatabaseOptionService) => {
-                        return dbOptionService.createOption();
-                    },
+                    useFactory: (dbOptionService: DatabaseOptionService) =>
+                        dbOptionService.createOption(),
                     inject: [DatabaseOptionService],
-                    dataSourceFactory: async (options) => {
-                        if (!options) {
-                            throw new Error('Invalid options passed');
-                        }
-                        return addTransactionalDataSource(
-                            new DataSource(options)
-                        );
-                    },
                 }),
 
                 MessageModule,
@@ -193,30 +183,37 @@ describe('The User Service', () => {
             ],
             providers: [
                 UserService,
-                UserRepository,
                 {
                     provide: getRepositoryToken(UserEntity),
-                    useValue: {},
+                    useValue: { findOne },
                 },
             ],
         }).compile();
-
-        userService = await module.get<UserService>(UserService);
+        userService = await module.get(UserService);
     });
 
-    describe('User Register', () => {
-        it('Should return user registered', async () => {
-            const userCreated = await userService.register({
-                payload: {
-                    username: 'username001',
-                    password: 'cdef3456@A',
-                    name: 'name001',
-                    address: 'address 001',
-                    email: 'alsdkjfh@gmail.com',
-                    phone: 'lkajsfdklsaj!@#',
-                },
+    describe('when getting a user by username', () => {
+        describe('and the user is matched', () => {
+            let user: UserEntity;
+            beforeEach(() => {
+                user = new UserEntity();
+                findOne.mockReturnValue(Promise.resolve(user));
             });
-            console.log(userCreated);
+
+            it('should return the user', async () => {
+                const fetchedUser = await userService.getByUsername('admin');
+                expect(fetchedUser).toEqual(user);
+            });
+        });
+
+        describe('and the user is not matched', () => {
+            beforeEach(() => {
+                findOne.mockReturnValue(undefined);
+            });
+            it('should return undefined', async () => {
+                const fetchedUser = await userService.getByUsername('admin');
+                await expect(fetchedUser).toEqual(undefined);
+            });
         });
     });
 });

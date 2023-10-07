@@ -6,29 +6,20 @@ import {
     UserPublicRegisterDoc,
 } from '../docs/user.public.doc';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
-import { UserRegisterCommand } from '../commands/user.register.command';
 import { Response } from 'src/core/response/decorators/response.decorator';
 import { UserLoginSerialization } from '../serializations/user.login.serialization';
 import { UserLoginDTO } from '../dtos/user.login.dto';
-import { UserLoginCommand } from '../commands/user.login.command';
+import { UserService } from '../services/user.service';
 
 @ApiTags('modules.public.user')
 @Controller({ version: '1', path: '/user' })
 export class UserPublicController {
-    constructor(private readonly commandBus: CommandBus) {}
+    constructor(private readonly userService: UserService) {}
 
     @UserPublicRegisterDoc()
     @Response('user.register')
     @Post('/register')
     async register(@Body() payload: UserRegisterDTO) {
-        return await this.commandBus.execute(new UserRegisterCommand(payload));
-    }
-
-    @UserPublicLoginDoc()
-    @Response('user.login', { serialization: UserLoginSerialization })
-    @HttpCode(HttpStatus.OK)
-    @Post('/login')
-    async login(@Body() payload: UserLoginDTO) {
-        return await this.commandBus.execute(new UserLoginCommand(payload));
+        return await this.userService.register(payload);
     }
 }

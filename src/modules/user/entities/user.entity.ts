@@ -55,14 +55,14 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     @Column({ name: 'phone' })
     phone: string;
 
-    @Column('varchar', { name: 'activeKey', nullable: true })
-    activeKey?: string;
+    // @Column('varchar', { name: 'activeKey', nullable: true })
+    // activeKey?: string;
 
-    @Column('timestamptz', { name: 'activeExpire', nullable: true })
-    activeExpire?: Date;
+    // @Column('timestamptz', { name: 'activeExpire', nullable: true })
+    // activeExpire?: Date;
 
-    @Column('timestamptz', { name: 'activatedAt', nullable: true })
-    activatedAt?: Date;
+    // @Column('timestamptz', { name: 'activatedAt', nullable: true })
+    // activatedAt?: Date;
 
     register(payload: any) {
         this.username = payload?.username || '';
