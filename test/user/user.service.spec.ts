@@ -1,4 +1,4 @@
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
@@ -216,11 +216,15 @@ describe('The User Service', () => {
 
         describe('User is not match', () => {
             beforeEach(() => {
-                findOne.mockReturnValue(undefined);
+                findOne.mockReturnValue(null);
             });
+
             it('Should return undefined', async () => {
-                const fetchedUser = await userService.getByUsername('admin');
-                await expect(fetchedUser).toEqual(undefined);
+                try {
+                    await userService.getByUsername('admin');
+                } catch (error) {
+                    expect(error).toBeInstanceOf(NotFoundException);
+                }
             });
         });
     });

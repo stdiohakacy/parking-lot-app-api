@@ -19,7 +19,6 @@ import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserLoginDTO } from '../dtos/user.login.dto';
-import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { ENUM_AUTH_LOGIN_WITH } from 'src/core/auth/constants/auth.enum.constant';
 
 @Injectable()
@@ -31,7 +30,15 @@ export class UserService {
     ) {}
 
     async getByUsername(username: string) {
-        return await this.userRepo.findOne({ where: { username } });
+        const user = await this.userRepo.findOne({ where: { username } });
+        if (!user) {
+            throw new NotFoundException({
+                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_NOT_FOUND_ERROR,
+                message: 'user.error.notFound',
+            });
+        }
+
+        return user;
     }
 
     async register(payload: UserRegisterDTO): Promise<UserEntity> {
@@ -62,6 +69,7 @@ export class UserService {
     async login(payload: UserLoginDTO) {
         const { username, password } = payload;
         const user = await this.getByUsername(username);
+
         if (!username) {
             throw new NotFoundException({
                 statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_NOT_FOUND_ERROR,
