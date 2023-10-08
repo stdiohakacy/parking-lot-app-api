@@ -55,24 +55,26 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     @Column({ name: 'phone' })
     phone: string;
 
-    // @Column('varchar', { name: 'activeKey', nullable: true })
-    // activeKey?: string;
+    @Column('varchar', { name: 'activeKey', nullable: true })
+    activeKey?: string;
 
-    // @Column('timestamptz', { name: 'activeExpire', nullable: true })
-    // activeExpire?: Date;
+    @Column('timestamptz', { name: 'activeExpire', nullable: true })
+    activeExpire?: Date;
 
-    // @Column('timestamptz', { name: 'activatedAt', nullable: true })
-    // activatedAt?: Date;
+    @Column('timestamptz', { name: 'activatedAt', nullable: true })
+    activatedAt?: Date;
 
     register(payload: any) {
         this.username = payload?.username || '';
         this.password = payload?.password || '';
-        this.status = payload?.status || ENUM_USER_STATUS.NONE;
         this.type = payload?.type || ENUM_USER_TYPE.PARKING_AGENT;
         this.name = payload?.name || '';
         this.address = payload?.address || '';
         this.email = payload?.email || '';
         this.phone = payload?.phone || '';
+        this.activeKey = payload?.activeKey || '';
+        this.activeExpire = payload?.activeExpire;
+        this.status = payload?.status || ENUM_USER_STATUS.INACTIVE;
 
         return this;
     }

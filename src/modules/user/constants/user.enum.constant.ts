@@ -4,6 +4,7 @@ export enum ENUM_USER_SIGN_UP_FROM {
 }
 
 export enum ENUM_USER_STATUS {
+    INACTIVE = 'inactive',
     ACTIVE = 'active',
     CLOSED = 'closed',
     CANCELED = 'canceled',

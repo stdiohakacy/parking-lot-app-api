@@ -20,13 +20,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserLoginDTO } from '../dtos/user.login.dto';
 import { ENUM_AUTH_LOGIN_WITH } from 'src/core/auth/constants/auth.enum.constant';
+import { randomBytes } from 'crypto';
+import { HelperDateService } from 'src/core/helper/services/helper.date.service';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(UserEntity)
         private userRepo: Repository<UserEntity>,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly helperDateService: HelperDateService
     ) {}
 
     async getByUsername(username: string) {
@@ -57,10 +60,17 @@ export class UserService {
         }
         const passwordAuth = await this.authService.createPassword(password);
 
+        const activeKey = randomBytes(32).toString('hex');
+        const activeExpire = this.helperDateService.forwardInSeconds(
+            3 * 24 * 60 * 60,
+            { fromDate: new Date() }
+        );
+
         const user = new UserEntity().register({
             ...payload,
+            activeKey,
+            activeExpire,
             password: passwordAuth,
-            type: ENUM_USER_TYPE.PARKING_AGENT,
         });
 
         return await this.userRepo.save(user);
