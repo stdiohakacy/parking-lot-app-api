@@ -70,7 +70,7 @@ export class UserService {
         const { username, password } = payload;
         const user = await this.getByUsername(username);
 
-        if (!username) {
+        if (!user) {
             throw new NotFoundException({
                 statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_NOT_FOUND_ERROR,
                 message: 'user.error.notFound',

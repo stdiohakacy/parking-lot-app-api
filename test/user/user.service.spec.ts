@@ -1,4 +1,8 @@
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    ConflictException,
+    NotFoundException,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
@@ -21,6 +25,10 @@ import { ResponseModule } from 'src/core/response/response.module';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
 import { UserService } from 'src/modules/user/services/user.service';
 import { userStub } from './stubs/user.stub';
+import { AuthService } from 'src/core/auth/services/auth.service';
+import { UserLoginDTO } from 'src/modules/user/dtos/user.login.dto';
+import { ENUM_USER_STATUS_CODE_ERROR } from 'src/modules/user/constants/user.status-code.constant';
+import { ENUM_USER_STATUS } from 'src/modules/user/constants/user.enum.constant';
 
 describe('The User Service', () => {
     let userService: UserService;
@@ -195,7 +203,7 @@ describe('The User Service', () => {
     });
 
     describe('User service should be defined', () => {
-        it('should be defined', () => {
+        it('Should be defined', () => {
             expect(userService).toBeDefined();
         });
     });
@@ -269,6 +277,142 @@ describe('The User Service', () => {
 
             const userRegistered = await userService.register(userRegisterDTO);
             expect(userRegistered).toEqual(userStub());
+        });
+    });
+
+    describe('Login user', () => {
+        let userService: UserService;
+        let authService: AuthService;
+
+        beforeEach(() => {
+            // Mock AuthService methods as needed
+            authService = {
+                validateUser: jest.fn(),
+                getAccessTokenExpirationTime: jest.fn(),
+                createPayloadAccessToken: jest.fn(),
+                createPayloadRefreshToken: jest.fn(),
+                getPayloadEncryption: jest.fn(),
+                encryptAccessToken: jest.fn(),
+                encryptRefreshToken: jest.fn(),
+                createAccessToken: jest.fn(),
+                createRefreshToken: jest.fn(),
+                checkPasswordExpired: jest.fn(),
+            } as any; // Mock AuthService methods here
+
+            userService = new UserService(
+                {} as any, // Mocked userRepo
+                authService
+            );
+        });
+
+        // Test for a scenario where the user is not found
+        it('Should throw NotFoundException when the user is not found', async () => {
+            // Arrange
+            const payload: UserLoginDTO = {
+                username: 'nonexistentuser',
+                password: 'password',
+            };
+            const expectedError = new NotFoundException({
+                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_NOT_FOUND_ERROR,
+                message: 'user.error.notFound',
+            });
+
+            // Mock the getByUsername method to return null (user not found)
+            userService.getByUsername = jest.fn().mockResolvedValue(null);
+
+            // Act and Assert
+            try {
+                await userService.login(payload);
+                // If the login doesn't throw an exception, fail the test
+                fail('Expected NotFoundException was not thrown.');
+            } catch (error) {
+                // Check if the error is an instance of NotFoundException
+                expect(error).toBeInstanceOf(NotFoundException);
+                expect(error).toEqual(expectedError);
+            }
+        });
+
+        it('should throw BadRequestException when the password does not match', async () => {
+            const payload: UserLoginDTO = {
+                username: 'existinguser',
+                password: 'incorrectpassword',
+            };
+            const expectedError = new BadRequestException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_PASSWORD_NOT_MATCH_ERROR,
+                message: 'user.error.passwordNotMatch',
+            });
+
+            userService.getByUsername = jest.fn().mockResolvedValue({
+                username: 'existinguser',
+                password: { passwordHash: 'correctpasswordhash' },
+                status: ENUM_USER_STATUS.ACTIVE,
+            });
+
+            authService.validateUser = jest.fn().mockResolvedValue(false);
+
+            try {
+                await userService.login(payload);
+                fail('Expected BadRequestException was not thrown.');
+            } catch (error) {
+                expect(error).toBeInstanceOf(BadRequestException);
+                expect(error).toEqual(expectedError);
+            }
+        });
+
+        // Test for a scenario where login is successful
+        it('should return access and refresh tokens on successful login', async () => {
+            // Arrange
+            const payload: UserLoginDTO = {
+                username: 'existinguser',
+                password: 'correctpassword',
+            };
+
+            // Mock the getByUsername method to return a user
+            userService.getByUsername = jest.fn().mockResolvedValue({
+                username: 'existinguser',
+                password: { passwordHash: 'correctpasswordhash' },
+                status: ENUM_USER_STATUS.ACTIVE,
+                id: 'userid123',
+            });
+
+            // Mock the authService methods as needed for a successful login
+            authService.validateUser = jest.fn().mockResolvedValue(true);
+            authService.getTokenType = jest.fn().mockResolvedValue('Bearer');
+            authService.getAccessTokenExpirationTime = jest
+                .fn()
+                .mockResolvedValue(3600);
+            authService.createPayloadAccessToken = jest
+                .fn()
+                .mockResolvedValue({});
+            authService.createPayloadRefreshToken = jest
+                .fn()
+                .mockResolvedValue({});
+            authService.getPayloadEncryption = jest
+                .fn()
+                .mockResolvedValue(false);
+            authService.createAccessToken = jest
+                .fn()
+                .mockResolvedValue('access-token');
+            authService.createRefreshToken = jest
+                .fn()
+                .mockResolvedValue('refresh-token');
+            authService.checkPasswordExpired = jest
+                .fn()
+                .mockResolvedValue(false);
+
+            // Act
+            const result = await userService.login(payload);
+
+            // Assert
+            expect(result).toEqual({
+                data: {
+                    tokenType: 'Bearer',
+                    expiresIn: 3600,
+                    accessToken: 'access-token',
+                    refreshToken: 'refresh-token',
+                },
+            });
         });
     });
 });
