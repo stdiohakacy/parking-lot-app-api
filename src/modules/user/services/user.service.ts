@@ -42,6 +42,10 @@ export class UserService {
         private readonly configService: ConfigService
     ) {}
 
+    async getById(id: string) {
+        return await this.userRepo.findOne({ where: { id } });
+    }
+
     async active(payload: UserActiveDTO) {
         const { username, activeKey } = payload;
         const user = await this.userRepo.findOne({ where: { username } });
