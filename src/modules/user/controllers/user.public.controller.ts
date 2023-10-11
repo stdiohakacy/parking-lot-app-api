@@ -1,6 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
+    TestDoc,
     UserPublicLoginDoc,
     UserPublicRegisterDoc,
 } from '../docs/user.public.doc';
@@ -28,5 +29,15 @@ export class UserPublicController {
     @Post('/login')
     async login(@Body() payload: UserLoginDTO) {
         return await this.userService.login(payload);
+    }
+
+    @TestDoc()
+    @Post('/test')
+    async test() {
+        return await this.userService.test({
+            username: 'duynguyen',
+            activationLink:
+                'https://www.youtube.com/watch?v=t7tZFq29lis&list=RD0HZ9UO7pLfo&index=28',
+        });
     }
 }

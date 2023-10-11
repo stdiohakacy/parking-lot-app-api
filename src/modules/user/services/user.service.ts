@@ -22,6 +22,13 @@ import { UserLoginDTO } from '../dtos/user.login.dto';
 import { ENUM_AUTH_LOGIN_WITH } from 'src/core/auth/constants/auth.enum.constant';
 import { randomBytes } from 'crypto';
 import { HelperDateService } from 'src/core/helper/services/helper.date.service';
+import { MailService } from 'src/core/mail/mail.service';
+import { ENUM_MAIL_SUBJECT } from 'src/modules/mail/constants/mail.enum.constant';
+import { PromiseResult } from 'aws-sdk/lib/request';
+import { SendEmailResponse } from '@aws-sdk/client-ses';
+import { AWSError } from 'aws-sdk';
+import { ENUM_MAIL_TEMPLATE_KEY } from 'src/core/mail/constants/mail.enum.constant';
+import { IMailParamsAccountActivation } from 'src/core/mail/interfaces/mail.interface';
 
 @Injectable()
 export class UserService {
@@ -29,7 +36,8 @@ export class UserService {
         @InjectRepository(UserEntity)
         private userRepo: Repository<UserEntity>,
         private readonly authService: AuthService,
-        private readonly helperDateService: HelperDateService
+        private readonly helperDateService: HelperDateService,
+        private readonly mailService: MailService
     ) {}
 
     async getByUsername(username: string) {
@@ -65,6 +73,8 @@ export class UserService {
             3 * 24 * 60 * 60,
             { fromDate: new Date() }
         );
+
+        // mailService.send('account-activation', { username: '', link: '' });
 
         const user = new UserEntity().register({
             ...payload,
@@ -159,5 +169,21 @@ export class UserService {
                 refreshToken,
             },
         };
+    }
+
+    async test(
+        params: IMailParamsAccountActivation //
+    ): Promise<PromiseResult<SendEmailResponse, AWSError>> {
+        const htmlContent =
+            this.mailService.getContentEmail<IMailParamsAccountActivation>(
+                ENUM_MAIL_TEMPLATE_KEY.ACCOUNT_ACTIVATION,
+                params
+            );
+
+        return await this.mailService.send(
+            ['nguyendangduy2210@gmail.com'],
+            ENUM_MAIL_SUBJECT.ACCOUNT_ACTIVATION,
+            htmlContent
+        );
     }
 }

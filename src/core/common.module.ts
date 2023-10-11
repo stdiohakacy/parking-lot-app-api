@@ -19,6 +19,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseOptionService } from './database/services/database.options.service';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { DataSource } from 'typeorm';
+import { BullCoreModule } from './queue/bull/bull.core.module';
+import { MailCoreModule } from './mail/mail.core.module';
 
 @Module({
     controllers: [],
@@ -140,6 +142,9 @@ import { DataSource } from 'typeorm';
                     .allow(null, '')
                     .uri()
                     .optional(),
+
+                REDIS_HOST: Joi.string().required(),
+                REDIS_PORT: Joi.number().required(),
             }),
             validationOptions: {
                 allowUnknown: true,
@@ -160,7 +165,7 @@ import { DataSource } from 'typeorm';
                 return addTransactionalDataSource(new DataSource(options));
             },
         }),
-
+        BullCoreModule,
         MessageModule,
         HelperModule,
         PaginationModule,

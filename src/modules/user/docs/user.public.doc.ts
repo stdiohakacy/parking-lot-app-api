@@ -24,3 +24,11 @@ export function UserPublicLoginDoc(): MethodDecorator {
         })
     );
 }
+
+export function TestDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.public.test' }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('test')
+    );
+}
