@@ -23,12 +23,14 @@ import { ENUM_AUTH_LOGIN_WITH } from 'src/core/auth/constants/auth.enum.constant
 import { randomBytes } from 'crypto';
 import { HelperDateService } from 'src/core/helper/services/helper.date.service';
 import { MailService } from 'src/core/mail/mail.service';
-import { ENUM_MAIL_SUBJECT } from 'src/modules/mail/constants/mail.enum.constant';
+import {
+    ENUM_MAIL_SUBJECT,
+    ENUM_MAIL_TEMPLATE_KEY,
+} from 'src/modules/mail/constants/mail.enum.constant';
 import { PromiseResult } from 'aws-sdk/lib/request';
 import { SendEmailResponse } from '@aws-sdk/client-ses';
 import { AWSError } from 'aws-sdk';
-import { ENUM_MAIL_TEMPLATE_KEY } from 'src/core/mail/constants/mail.enum.constant';
-import { IMailParamsAccountActivation } from 'src/core/mail/interfaces/mail.interface';
+import { IMailParamsAccountActivation } from 'src/modules/mail/interfaces/mail.interface';
 
 @Injectable()
 export class UserService {
@@ -172,7 +174,7 @@ export class UserService {
     }
 
     async test(
-        params: IMailParamsAccountActivation //
+        params: IMailParamsAccountActivation
     ): Promise<PromiseResult<SendEmailResponse, AWSError>> {
         const htmlContent =
             this.mailService.getContentEmail<IMailParamsAccountActivation>(

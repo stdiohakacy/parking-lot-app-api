@@ -2,16 +2,14 @@ import { SendEmailRequest } from '@aws-sdk/client-ses';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SES } from 'aws-sdk';
-import { ENUM_MAIL_SUBJECT } from 'src/modules/mail/constants/mail.enum.constant';
-import { ENUM_MAIL_TEMPLATE_KEY } from './constants/mail.enum.constant';
 import {
-    IMailContent,
-    IMailOption,
-    IMailParamsAccountActivation,
-} from './interfaces/mail.interface';
+    ENUM_MAIL_SUBJECT,
+    ENUM_MAIL_TEMPLATE_KEY,
+} from 'src/modules/mail/constants/mail.enum.constant';
+import { IMailContent } from './interfaces/mail.interface';
 import { cloneDeep } from 'lodash';
-import { EMAIL_TEMPLATE } from './constants/mail.constant';
 import Mustache from 'mustache';
+import { EMAIL_TEMPLATE } from 'src/modules/mail/constants/mail.constant';
 
 @Injectable()
 export class MailService {
