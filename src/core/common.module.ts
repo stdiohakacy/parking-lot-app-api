@@ -20,7 +20,6 @@ import { DatabaseOptionService } from './database/services/database.options.serv
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { DataSource } from 'typeorm';
 import { BullCoreModule } from './queue/bull/bull.core.module';
-import { MailCoreModule } from './mail/mail.core.module';
 
 @Module({
     controllers: [],

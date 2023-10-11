@@ -25,10 +25,10 @@ export function UserPublicLoginDoc(): MethodDecorator {
     );
 }
 
-export function TestDoc(): MethodDecorator {
+export function UserPublicActiveDoc(): MethodDecorator {
     return applyDecorators(
-        Doc({ operation: 'modules.public.test' }),
+        Doc({ operation: 'modules.public.user' }),
         DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
-        DocResponse('test')
+        DocResponse('user.active', { httpStatus: HttpStatus.OK })
     );
 }

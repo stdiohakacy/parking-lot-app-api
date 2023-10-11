@@ -79,6 +79,14 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
         return this;
     }
 
+    active() {
+        this.status = ENUM_USER_STATUS.ACTIVE;
+        this.activatedAt = new Date();
+        this.activeKey = '';
+        this.activeExpire = null;
+        return this;
+    }
+
     payloadSerialization(): UserPayloadSerialization {
         return plainToInstance(UserPayloadSerialization, this);
     }

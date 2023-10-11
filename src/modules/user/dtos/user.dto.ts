@@ -115,4 +115,15 @@ export class UserDTO extends BaseDTO {
     @IsString()
     @IsNotEmpty()
     type: ENUM_USER_TYPE;
+
+    @ApiProperty({
+        name: 'activeKey',
+        description: 'Active key of user',
+        example: `3ed5956da5ea3bb9d88133dda7934ce5408e17c4d428d2cdc3e32210990dc114`,
+        required: true,
+    })
+    @IsString()
+    @IsNotEmpty()
+    @Type(() => String)
+    activeKey: string;
 }

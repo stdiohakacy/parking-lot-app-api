@@ -34,6 +34,10 @@
         "inactive": "User is inactive",
         "isActiveInvalid": "User is active invalid",
         "usernameExist": "Username exist",
-        "newPasswordMustDifference": "Old password must difference"
+        "newPasswordMustDifference": "Old password must difference",
+        "activeKey": {
+            "invalid": "Wrong active key",
+            "expired": "Active key expired"
+        }
     }
 }

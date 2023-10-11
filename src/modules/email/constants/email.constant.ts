@@ -1,4 +1,4 @@
-import { ENUM_MAIL_TEMPLATE_KEY } from './mail.enum.constant';
+import { ENUM_MAIL_TEMPLATE_KEY } from './email.enum.constant';
 
 export const EMAIL_TEMPLATE = {
     [ENUM_MAIL_TEMPLATE_KEY.ACCOUNT_ACTIVATION]: {

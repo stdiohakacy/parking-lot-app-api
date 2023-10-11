@@ -1,3 +1,8 @@
+export enum ENUM_EMAIL_PROVIDER_TYPE {
+    SES = 'ses',
+    CONSOLE = 'console',
+}
+
 export enum ENUM_MAIL_SUBJECT {
     ACCOUNT_ACTIVATION = 'Account Activation',
 }

@@ -22,15 +22,14 @@ import { UserLoginDTO } from '../dtos/user.login.dto';
 import { ENUM_AUTH_LOGIN_WITH } from 'src/core/auth/constants/auth.enum.constant';
 import { randomBytes } from 'crypto';
 import { HelperDateService } from 'src/core/helper/services/helper.date.service';
-import { MailService } from 'src/core/mail/mail.service';
+import { IMailParamsAccountActivation } from 'src/modules/email/interfaces/email.interface';
 import {
     ENUM_MAIL_SUBJECT,
     ENUM_MAIL_TEMPLATE_KEY,
-} from 'src/modules/mail/constants/mail.enum.constant';
-import { PromiseResult } from 'aws-sdk/lib/request';
-import { SendEmailResponse } from '@aws-sdk/client-ses';
-import { AWSError } from 'aws-sdk';
-import { IMailParamsAccountActivation } from 'src/modules/mail/interfaces/mail.interface';
+} from 'src/modules/email/constants/email.enum.constant';
+import { EmailProviderFactory } from 'src/modules/email/providers/email.provider.factory';
+import { ConfigService } from '@nestjs/config';
+import { UserActiveDTO } from '../dtos/user.active.dto';
 
 @Injectable()
 export class UserService {
@@ -39,8 +38,39 @@ export class UserService {
         private userRepo: Repository<UserEntity>,
         private readonly authService: AuthService,
         private readonly helperDateService: HelperDateService,
-        private readonly mailService: MailService
+        private readonly emailProviderFactory: EmailProviderFactory,
+        private readonly configService: ConfigService
     ) {}
+
+    async active(payload: UserActiveDTO) {
+        const { username, activeKey } = payload;
+        const user = await this.userRepo.findOne({ where: { username } });
+
+        if (!user) {
+            throw new NotFoundException({
+                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_NOT_FOUND_ERROR,
+                message: 'user.error.notFound',
+            });
+        }
+
+        if (user.activeKey !== activeKey) {
+            throw new BadRequestException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_ACTIVE_KEY_INVALID_ERROR,
+                message: 'user.error.activeKey.invalid',
+            });
+        }
+
+        if (user.activeExpire < this.helperDateService.create()) {
+            throw new BadRequestException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_ACTIVE_KEY_EXPIRED_ERROR,
+                message: 'user.error.activeKey.expired',
+            });
+        }
+
+        await this.userRepo.save(user.active());
+    }
 
     async getByUsername(username: string) {
         const user = await this.userRepo.findOne({ where: { username } });
@@ -55,7 +85,7 @@ export class UserService {
     }
 
     async register(payload: UserRegisterDTO): Promise<UserEntity> {
-        const { username, password } = payload;
+        const { username, password, email } = payload;
 
         const isUsernameExist = await this.userRepo.findOne({
             where: { username },
@@ -76,7 +106,26 @@ export class UserService {
             { fromDate: new Date() }
         );
 
-        // mailService.send('account-activation', { username: '', link: '' });
+        const emailProvider = this.emailProviderFactory.initProvider();
+
+        const htmlContent: string =
+            emailProvider.getContentEmail<IMailParamsAccountActivation>(
+                ENUM_MAIL_TEMPLATE_KEY.ACCOUNT_ACTIVATION,
+                {
+                    username,
+                    activationLink: `http://${this.configService.get<string>(
+                        'app.http.host'
+                    )}:${this.configService.get<string>(
+                        'app.http.port'
+                    )}/confirm-account?username=${username}&key=${activeKey}`,
+                }
+            );
+
+        emailProvider.send(
+            [email],
+            ENUM_MAIL_SUBJECT.ACCOUNT_ACTIVATION,
+            htmlContent
+        );
 
         const user = new UserEntity().register({
             ...payload,
@@ -84,8 +133,8 @@ export class UserService {
             activeExpire,
             password: passwordAuth,
         });
-
         return await this.userRepo.save(user);
+        // return user;
     }
 
     async login(payload: UserLoginDTO) {
@@ -171,21 +220,5 @@ export class UserService {
                 refreshToken,
             },
         };
-    }
-
-    async test(
-        params: IMailParamsAccountActivation
-    ): Promise<PromiseResult<SendEmailResponse, AWSError>> {
-        const htmlContent =
-            this.mailService.getContentEmail<IMailParamsAccountActivation>(
-                ENUM_MAIL_TEMPLATE_KEY.ACCOUNT_ACTIVATION,
-                params
-            );
-
-        return await this.mailService.send(
-            ['nguyendangduy2210@gmail.com'],
-            ENUM_MAIL_SUBJECT.ACCOUNT_ACTIVATION,
-            htmlContent
-        );
     }
 }

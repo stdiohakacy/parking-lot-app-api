@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
-    TestDoc,
+    UserPublicActiveDoc,
     UserPublicLoginDoc,
     UserPublicRegisterDoc,
 } from '../docs/user.public.doc';
@@ -10,6 +10,7 @@ import { Response } from 'src/core/response/decorators/response.decorator';
 import { UserLoginSerialization } from '../serializations/user.login.serialization';
 import { UserLoginDTO } from '../dtos/user.login.dto';
 import { UserService } from '../services/user.service';
+import { UserActiveDTO } from '../dtos/user.active.dto';
 
 @ApiTags('modules.public.user')
 @Controller({ version: '1', path: '/user' })
@@ -31,13 +32,11 @@ export class UserPublicController {
         return await this.userService.login(payload);
     }
 
-    @TestDoc()
-    @Post('/test')
-    async test() {
-        return await this.userService.test({
-            username: 'duynguyen',
-            activationLink:
-                'https://www.youtube.com/watch?v=t7tZFq29lis&list=RD0HZ9UO7pLfo&index=28',
-        });
+    @UserPublicActiveDoc()
+    @Response('user.active')
+    @HttpCode(HttpStatus.OK)
+    @Post('/active')
+    async active(@Body() payload: UserActiveDTO) {
+        return await this.userService.active(payload);
     }
 }
