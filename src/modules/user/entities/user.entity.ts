@@ -58,6 +58,9 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     @Column('varchar', { name: 'activeKey', nullable: true })
     activeKey?: string;
 
+    @Column('text', { name: 'avatar', nullable: true })
+    avatar?: string;
+
     @Column('timestamptz', { name: 'activeExpire', nullable: true })
     activeExpire?: Date;
 
@@ -89,5 +92,19 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     payloadSerialization(): UserPayloadSerialization {
         return plainToInstance(UserPayloadSerialization, this);
+    }
+
+    updatePassword(authPassword: IAuthPassword) {
+        this.password.passwordHash = authPassword.passwordHash;
+        this.password.passwordExpired = authPassword.passwordExpired;
+        this.password.passwordCreated = authPassword.passwordCreated;
+        this.password.salt = authPassword.salt;
+
+        return this;
+    }
+
+    updateAvatar(url: string) {
+        this.avatar = url;
+        return this;
     }
 }

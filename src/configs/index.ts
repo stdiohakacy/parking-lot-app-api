@@ -10,6 +10,7 @@ import DocConfig from './doc.config';
 import DebuggerConfig from './debugger.config';
 import MessageConfig from './message.config';
 import MailConfig from './mail.config';
+import StorageConfig from './storage.config';
 
 export default [
     AppConfig,
@@ -24,4 +25,5 @@ export default [
     DebuggerConfig,
     MessageConfig,
     MailConfig,
+    StorageConfig,
 ];

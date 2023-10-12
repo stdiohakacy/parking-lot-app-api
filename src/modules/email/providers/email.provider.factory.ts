@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SESEmailProvider } from './email.ses.provider';
 import { EmailConsoleProvider } from './email.console.provider';
 import { ENUM_EMAIL_PROVIDER_TYPE } from '../constants/email.enum.constant';
+import { ENUM_EMAIL_STATUS_CODE_ERROR } from '../constants/email.status-code.constant';
 
 @Injectable()
 export class EmailProviderFactory {
@@ -16,7 +17,11 @@ export class EmailProviderFactory {
             case ENUM_EMAIL_PROVIDER_TYPE.CONSOLE:
                 return new EmailConsoleProvider();
             default:
-                throw new Error('Unsupported Email Provider type');
+                throw new NotFoundException({
+                    statusCode:
+                        ENUM_EMAIL_STATUS_CODE_ERROR.EMAIL_NOT_FOUND_ERROR,
+                    message: 'mail.error.notFound',
+                });
         }
     }
 }
