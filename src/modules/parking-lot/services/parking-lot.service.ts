@@ -23,7 +23,7 @@ export class ParkingLotService {
         if (isParkingLotExist) {
             throw new ConflictException({
                 statusCode:
-                    ENUM_PARKING_LOT_STATUS_CODE_ERROR.PARKING_LOT_ALREADY_EXIST,
+                    ENUM_PARKING_LOT_STATUS_CODE_ERROR.PARKING_LOT_ALREADY_EXIST_ERROR,
                 message: 'parkingLot.error.nameExist',
             });
         }

@@ -8,6 +8,8 @@ import { UserPublicController } from 'src/modules/user/controllers/user.public.c
 import { UserModule } from 'src/modules/user/user.module';
 import { ParkingLotModule } from 'src/modules/parking-lot/parking-lot.module';
 import { ParkingLotPublicController } from 'src/modules/parking-lot/controllers/parking-lot.public.controller';
+import { ParkingSpotModule } from 'src/modules/parking-spot/parking-spot.module';
+import { ParkingSpotPublicController } from 'src/modules/parking-spot/controllers/parking-spot.public.controller';
 
 @Module({
     imports: [
@@ -17,12 +19,14 @@ import { ParkingLotPublicController } from 'src/modules/parking-lot/controllers/
         HealthModule,
         UserModule,
         ParkingLotModule,
+        ParkingSpotModule,
     ],
     controllers: [
         HealthPublicController,
         MessagePublicController,
         UserPublicController,
         ParkingLotPublicController,
+        ParkingSpotPublicController,
     ],
     providers: [],
     exports: [],

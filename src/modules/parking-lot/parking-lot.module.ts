@@ -5,6 +5,7 @@ import { EmailModule } from '../email/email.module';
 import { StorageModule } from '../storages/storage.module';
 import { ParkingLotEntity } from './entities/parking-lot.entity';
 import { ParkingLotService } from './services/parking-lot.service';
+import { ParkingSpotModule } from '../parking-spot/parking-spot.module';
 
 @Module({
     imports: [

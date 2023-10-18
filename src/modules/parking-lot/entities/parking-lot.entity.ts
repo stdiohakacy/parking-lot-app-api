@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
 import { ParkingLotDTO } from '../dtos/parking-lot.dto';
+import { ParkingSpotEntity } from '../../../modules/parking-spot/entities/parking-spot.entity';
 
 export interface IParkingLotEntity extends IBaseEntity<ParkingLotDTO> {
     name: string;
@@ -19,4 +20,10 @@ export class ParkingLotEntity
 
     @Column({ name: 'address' })
     address: string;
+
+    @OneToMany(
+        () => ParkingSpotEntity,
+        (parkingSpot) => parkingSpot.parkingLotId
+    )
+    parkingSpots: ParkingSpotEntity[];
 }
