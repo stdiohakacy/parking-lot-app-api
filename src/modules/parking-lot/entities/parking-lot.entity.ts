@@ -3,6 +3,7 @@ import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
 import { ParkingLotDTO } from '../dtos/parking-lot.dto';
 import { ParkingSpotEntity } from '../../../modules/parking-spot/entities/parking-spot.entity';
+import { EntranceEntity } from '../../../modules/entrance/entities/entrance.entity';
 
 export interface IParkingLotEntity extends IBaseEntity<ParkingLotDTO> {
     name: string;
@@ -23,7 +24,10 @@ export class ParkingLotEntity
 
     @OneToMany(
         () => ParkingSpotEntity,
-        (parkingSpot) => parkingSpot.parkingLotId
+        (parkingSpots) => parkingSpots.parkingLot
     )
     parkingSpots: ParkingSpotEntity[];
+
+    @OneToMany(() => EntranceEntity, (entrances) => entrances.parkingLot)
+    entrances: EntranceEntity[];
 }
