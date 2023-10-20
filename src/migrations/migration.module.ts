@@ -7,6 +7,9 @@ import { ParkingLotModule } from 'src/modules/parking-lot/parking-lot.module';
 import { MigrationParkingLotSeed } from './seeds/migration.parking-lot.seed';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ParkingLotEntity } from 'src/modules/parking-lot/entities/parking-lot.entity';
+import { MigrationParkingSpotSeed } from './seeds/migration.parking-spot.seed';
+import { ParkingSpotEntity } from 'src/modules/parking-spot/entities/parking-spot.entity';
+import { ParkingSpotModule } from 'src/modules/parking-spot/parking-spot.module';
 
 @Module({
     imports: [
@@ -15,9 +18,10 @@ import { ParkingLotEntity } from 'src/modules/parking-lot/entities/parking-lot.e
         ApiKeyModule,
         AuthCoreModule,
         ParkingLotModule,
-        TypeOrmModule.forFeature([ParkingLotEntity]),
+        ParkingSpotModule,
+        TypeOrmModule.forFeature([ParkingLotEntity, ParkingSpotEntity]),
     ],
-    providers: [MigrationParkingLotSeed],
+    providers: [MigrationParkingLotSeed, MigrationParkingSpotSeed],
     exports: [],
 })
 export class MigrationModule {}

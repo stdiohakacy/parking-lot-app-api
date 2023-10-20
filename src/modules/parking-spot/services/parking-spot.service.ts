@@ -37,4 +37,17 @@ export class ParkingSpotService {
         const parkingSpotCreated = await this.parkingSpotRepo.save(dto);
         return instanceToPlain({ data: parkingSpotCreated });
     }
+
+    async createMany(dto: ParkingSpotCreateDTO[]) {
+        await this.parkingSpotRepo.save(dto);
+    }
+
+    async remove(ids: string[]) {
+        await this.parkingSpotRepo
+            .createQueryBuilder('parkingSpot')
+            .delete()
+            .from(ParkingLotEntity)
+            .where('id IN (:...ids)', { ids })
+            .execute();
+    }
 }

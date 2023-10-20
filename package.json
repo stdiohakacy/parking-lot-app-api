@@ -40,9 +40,11 @@
         "migration:create": "yarn run typeorm migration:create -d ormconfig",
         "migration:run": "yarn run typeorm migration:run -d ormconfig",
         "seed:parkingLot": "nestjs-command seed:parkingLot",
+        "seed:parkingSpot": "nestjs-command seed:parkingSpot",
         "rollback:parkingLot": "nestjs-command remove:parkingLot",
-        "seed": "yarn seed:parkingLot",
-        "rollback": "yarn rollback:parkingLot"
+        "rollback:parkingSpot": "nestjs-command remove:parkingSpot",
+        "seed": "yarn seed:parkingLot && yarn seed:parkingSpot",
+        "rollback": "yarn rollback:parkingSpot && yarn seed:parkingLot"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.423.0",
