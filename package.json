@@ -38,7 +38,11 @@
         "spell:test": "cspell lint --config cspell.json test/**/*.ts --color --gitignore --no-must-find-files --no-summary --no-progress || true",
         "migration:generate": "yarn run typeorm migration:generate -d ormconfig",
         "migration:create": "yarn run typeorm migration:create -d ormconfig",
-        "migration:run": "yarn run typeorm migration:run -d ormconfig"
+        "migration:run": "yarn run typeorm migration:run -d ormconfig",
+        "seed:parkingLot": "nestjs-command seed:parkingLot",
+        "rollback:parkingLot": "nestjs-command remove:parkingLot",
+        "seed": "yarn seed:parkingLot",
+        "rollback": "yarn rollback:parkingLot"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.423.0",

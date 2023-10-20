@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ParkingLotEntity } from '../entities/parking-lot.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { ParkingLotCreateDTO } from '../dtos/parking-lot.create.dto';
 import { ENUM_PARKING_LOT_STATUS_CODE_ERROR } from '../constants/parking-lot.status-code.constant';
 import { instanceToPlain } from 'class-transformer';
@@ -29,5 +29,14 @@ export class ParkingLotService {
         }
         const parkingLotCreated = await this.parkingLotRepo.save(dto);
         return instanceToPlain({ data: parkingLotCreated });
+    }
+
+    async remove(ids: string[]) {
+        await this.parkingLotRepo
+            .createQueryBuilder('parkingLot')
+            .delete()
+            .from(ParkingLotEntity)
+            .where('id IN (:...ids)', { ids })
+            .execute();
     }
 }
