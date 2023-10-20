@@ -16,6 +16,8 @@ import { ExitPublicController } from 'src/modules/exit/controllers/exit.public.c
 import { ExitModule } from 'src/modules/exit/exit.module';
 import { ParkingRatePublicController } from 'src/modules/parking-rate/controllers/parking-rate.public.controller';
 import { ParkingRateModule } from 'src/modules/parking-rate/parking-rate.module';
+import { ParkingTicketPublicController } from 'src/modules/parking-ticket/controllers/parking-ticket.public.controller';
+import { ParkingTicketModule } from 'src/modules/parking-ticket/parking-ticket.module';
 
 @Module({
     imports: [
@@ -29,6 +31,7 @@ import { ParkingRateModule } from 'src/modules/parking-rate/parking-rate.module'
         EntranceModule,
         ExitModule,
         ParkingRateModule,
+        ParkingTicketModule,
     ],
     controllers: [
         HealthPublicController,
@@ -39,6 +42,7 @@ import { ParkingRateModule } from 'src/modules/parking-rate/parking-rate.module'
         EntrancePublicController,
         ExitPublicController,
         ParkingRatePublicController,
+        ParkingTicketPublicController,
     ],
     providers: [],
     exports: [],

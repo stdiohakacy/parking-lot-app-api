@@ -17,7 +17,7 @@ export class EntranceEntity
     @Column({ name: 'name' })
     name: string;
 
-    @Column({ name: 'parkingLotId' })
+    @Column({ name: 'parkingLotId', type: "uuid" })
     parkingLotId: string;
 
     @ManyToOne(() => ParkingLotEntity, (parkingLot) => parkingLot.parkingSpots)

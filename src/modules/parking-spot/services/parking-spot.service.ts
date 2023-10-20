@@ -34,7 +34,7 @@ export class ParkingSpotService {
             });
         }
 
-        const parkingSpot = await this.parkingSpotRepo.save(dto);
-        return instanceToPlain({ data: parkingSpot });
+        const parkingSpotCreated = await this.parkingSpotRepo.save(dto);
+        return instanceToPlain({ data: parkingSpotCreated });
     }
 }

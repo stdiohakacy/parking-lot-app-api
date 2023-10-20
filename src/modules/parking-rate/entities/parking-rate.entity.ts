@@ -22,7 +22,7 @@ export class ParkingRateEntity
     @Column({ name: 'rate' })
     rate: number;
 
-    @Column({ name: 'parkingLotId' })
+    @Column({ name: 'parkingLotId', type: 'uuid' })
     parkingLotId: string;
 
     @ManyToOne(() => ParkingLotEntity, (parkingLot) => parkingLot.parkingSpots)

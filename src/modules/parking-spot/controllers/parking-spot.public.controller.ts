@@ -1,9 +1,18 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    HttpCode,
+    HttpStatus,
+    NotFoundException,
+    Post,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'src/core/response/decorators/response.decorator';
 import { ParkingSpotCreateDTO } from '../dtos/parking-spot.create.dto';
 import { ParkingSpotService } from '../services/parking-spot.service';
 import { ParkingSpotPublicCreateDoc } from '../docs/parking-spot.public.doc';
+import { ENUM_PARKING_SPOT_TYPE } from '../constants/parking-spot.enum.constant';
+import { ENUM_PARKING_LOT_STATUS_CODE_ERROR } from 'src/modules/parking-lot/constants/parking-lot.status-code.constant';
 
 @ApiTags('modules.public.parking-spot')
 @Controller({ version: '1', path: '/parking-spots' })
@@ -14,7 +23,7 @@ export class ParkingSpotPublicController {
     @Response('parkingSpot.create')
     @HttpCode(HttpStatus.OK)
     @Post('/')
-    async create(@Body() payload: ParkingSpotCreateDTO) {
-        return await this.parkingSpotService.create(payload);
+    async create(@Body() dto: ParkingSpotCreateDTO) {
+        return await this.parkingSpotService.create(dto);
     }
 }

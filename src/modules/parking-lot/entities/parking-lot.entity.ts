@@ -6,6 +6,7 @@ import { ParkingSpotEntity } from '../../../modules/parking-spot/entities/parkin
 import { EntranceEntity } from '../../../modules/entrance/entities/entrance.entity';
 import { ExitEntity } from '../../../modules/exit/entities/exit.entity';
 import { ParkingRateEntity } from '../../../modules/parking-rate/entities/parking-rate.entity';
+import { ParkingTicketEntity } from '../../../modules/parking-ticket/entities/parking-ticket.entity';
 
 export interface IParkingLotEntity extends IBaseEntity<ParkingLotDTO> {
     name: string;
@@ -41,4 +42,10 @@ export class ParkingLotEntity
         (parkingRates) => parkingRates.parkingLot
     )
     parkingRates: ParkingRateEntity[];
+
+    @OneToMany(
+        () => ParkingTicketEntity,
+        (parkingTickets) => parkingTickets.parkingLot
+    )
+    parkingTickets: ParkingTicketEntity[];
 }
