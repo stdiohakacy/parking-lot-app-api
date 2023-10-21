@@ -23,44 +23,21 @@ export class MigrationParkingSpotSeed {
             const parkingLot =
                 await this.parkingLotService.getByName('Parking lot 01');
 
-            const parkingSpotsLarge = Array.from({
-                length: 10,
-            }).map(() => ({
-                isFree: true,
-                parkingSpotType: ENUM_PARKING_SPOT_TYPE.LARGE,
-                parkingLotId: parkingLot.id,
-            }));
-
-            const parkingSpotsCompact = Array.from({
-                length: 10,
-            }).map(() => ({
-                isFree: true,
-                parkingSpotType: ENUM_PARKING_SPOT_TYPE.COMPACT,
-                parkingLotId: parkingLot.id,
-            }));
-
-            const parkingSpotsHandicapped = Array.from({
-                length: 10,
-            }).map(() => ({
-                isFree: true,
-                parkingSpotType: ENUM_PARKING_SPOT_TYPE.HANDICAPPED,
-                parkingLotId: parkingLot.id,
-            }));
-
-            const parkingSpotsMotorcycle = Array.from({
-                length: 10,
-            }).map(() => ({
-                isFree: true,
-                parkingSpotType: ENUM_PARKING_SPOT_TYPE.MOTORCYCLE,
-                parkingLotId: parkingLot.id,
-            }));
-
-            const parkingSpots = [
-                ...parkingSpotsLarge,
-                ...parkingSpotsCompact,
-                ...parkingSpotsHandicapped,
-                ...parkingSpotsMotorcycle,
+            const parkingSpotTypes = [
+                ENUM_PARKING_SPOT_TYPE.LARGE,
+                ENUM_PARKING_SPOT_TYPE.COMPACT,
+                ENUM_PARKING_SPOT_TYPE.HANDICAPPED,
+                ENUM_PARKING_SPOT_TYPE.MOTORCYCLE,
             ];
+
+            const parkingSpots = parkingSpotTypes.reduce((spots, type) => {
+                const parkingSpotArray = Array.from({ length: 10 }).map(() => ({
+                    isFree: true,
+                    parkingSpotType: type,
+                    parkingLotId: parkingLot.id,
+                }));
+                return spots.concat(parkingSpotArray);
+            }, []);
 
             await this.parkingSpotService.createMany(parkingSpots);
         } catch (err: any) {
