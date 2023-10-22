@@ -10,6 +10,16 @@ export function ParkingSpotPublicCreateDoc(): MethodDecorator {
     return applyDecorators(
         Doc({ operation: 'modules.public.parking-spots' }),
         DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
-        DocResponse('parking-spot.create', { httpStatus: HttpStatus.CREATED })
+        DocResponse('parkingSpot.create', { httpStatus: HttpStatus.CREATED })
+    );
+}
+
+export function ParkingSpotPublicParkVehicleDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.public.parking-spots' }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('parkingSpot.parkVehicle', {
+            httpStatus: HttpStatus.OK,
+        })
     );
 }

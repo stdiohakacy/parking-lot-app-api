@@ -1,8 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseEntity } from '../entity/base.entity';
+import { IsNotEmpty, IsUUID } from 'class-validator';
+import { Type } from 'class-transformer';
+import { faker } from '@faker-js/faker';
 
 export class BaseDTO {
-    @ApiProperty()
+    @ApiProperty({
+        name: 'id',
+        description: 'base id',
+        example: faker.string.uuid(),
+        required: true,
+        nullable: false,
+    })
+    @IsNotEmpty()
+    @IsUUID()
+    @Type(() => String)
     id: string;
 
     @ApiProperty()

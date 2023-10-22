@@ -22,7 +22,7 @@ export class ParkingSpotDTO extends BaseDTO {
         name: 'type',
         example: ENUM_PARKING_SPOT_TYPE.LARGE,
         required: true,
-        type: ENUM_PARKING_SPOT_TYPE,
+        type: String,
         nullable: false,
     })
     @IsNotEmpty()

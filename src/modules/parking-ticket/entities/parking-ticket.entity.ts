@@ -11,6 +11,7 @@ export interface IParkingTicketEntity extends IBaseEntity<ParkingTicketDTO> {
     timeOut?: Date;
     amount?: number;
     parkingLotId: string;
+    vehicleId?: string;
 }
 
 @Entity({ name: 'parking-tickets' })
@@ -34,8 +35,8 @@ export class ParkingTicketEntity
     @Column({ name: 'parkingLotId', type: 'uuid' })
     parkingLotId: string;
 
-    @Column({ name: 'vehicleId', type: 'uuid' })
-    vehicleId: string;
+    @Column({ name: 'vehicleId', type: 'uuid', nullable: true })
+    vehicleId?: string;
 
     @ManyToOne(
         () => ParkingLotEntity,
@@ -44,10 +45,7 @@ export class ParkingTicketEntity
     @JoinColumn({ name: 'parkingLotId' })
     parkingLot: ParkingLotEntity;
 
-    @ManyToOne(
-        () => ParkingTicketEntity,
-        (parkingTickets) => parkingTickets.vehicle
-    )
+    @ManyToOne(() => VehicleEntity, (vehicle) => vehicle.parkingTickets)
     @JoinColumn({ name: 'vehicleId' })
     vehicle: VehicleEntity;
 }

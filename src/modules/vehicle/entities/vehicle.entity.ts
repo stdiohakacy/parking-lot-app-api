@@ -5,10 +5,11 @@ import { ParkingLotEntity } from '../../../modules/parking-lot/entities/parking-
 import { VehicleDTO } from '../dtos/vehicle.dto';
 import { ParkingSpotEntity } from '../../../modules/parking-spot/entities/parking-spot.entity';
 import { ParkingTicketEntity } from '../../../modules/parking-ticket/entities/parking-ticket.entity';
+import { ENUM_VEHICLE_TYPE } from '../constants/vehicle.enum.constant';
 
 export interface IVehicleEntity extends IBaseEntity<VehicleDTO> {
     licenseNo: string;
-    parkingSpotId: string;
+    parkingSpotId?: string;
 }
 
 @Entity({ name: 'vehicles' })
@@ -20,8 +21,11 @@ export class VehicleEntity
     @Column({ name: 'licenseNo' })
     licenseNo: string;
 
-    @Column({ name: 'parkingSpotId', type: 'uuid' })
-    parkingSpotId: string;
+    @Column({ name: 'parkingSpotId', type: 'uuid', nullable: true })
+    parkingSpotId?: string;
+
+    @Column({ name: 'vehicleType', type: 'text' })
+    vehicleType: ENUM_VEHICLE_TYPE;
 
     @ManyToOne(() => ParkingSpotEntity, (parkingSpot) => parkingSpot.vehicles)
     @JoinColumn({ name: 'parkingSpotId' })
