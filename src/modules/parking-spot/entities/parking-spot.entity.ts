@@ -32,4 +32,9 @@ export class ParkingSpotEntity
 
     @OneToMany(() => VehicleEntity, (vehicles) => vehicles.parkingSpot)
     vehicles?: VehicleEntity[];
+
+    spotUsed() {
+        this.isFree = false;
+        return this;
+    }
 }

@@ -7,9 +7,9 @@ import { PaymentEntity } from '../../../modules/payment/entities/payment.entity'
 
 export interface IParkingTicketEntity extends IBaseEntity<ParkingTicketDTO> {
     entryTime: Date;
-    exitTime: Date;
-    vehicleId: string;
-    paymentId: string;
+    exitTime?: Date;
+    vehicleId?: string;
+    paymentId?: string;
 }
 
 @Entity({ name: 'parking_tickets' })
@@ -21,14 +21,14 @@ export class ParkingTicketEntity
     @Column({ name: 'entryTime', type: 'timestamptz' })
     entryTime: Date;
 
-    @Column({ name: 'exitTime', type: 'timestamptz' })
-    exitTime: Date;
+    @Column({ name: 'exitTime', type: 'timestamptz', nullable: true })
+    exitTime?: Date;
 
     @Column({ name: 'vehicleId', type: 'uuid', nullable: true })
-    vehicleId: string;
+    vehicleId?: string;
 
     @Column({ name: 'paymentId', type: 'uuid', nullable: true })
-    paymentId: string;
+    paymentId?: string;
 
     @ManyToOne(() => VehicleEntity, (vehicle) => vehicle.parkingTickets)
     @JoinColumn({ name: 'vehicleId' })
