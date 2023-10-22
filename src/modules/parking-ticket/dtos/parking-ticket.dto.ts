@@ -1,93 +1,59 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-    IsDate,
-    IsNotEmpty,
-    IsNumber,
-    IsOptional,
-    IsString,
-    IsUUID,
-} from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 import { BaseDTO } from '../../../core/base/dto/base.dto';
 import { faker } from '@faker-js/faker';
 
 export class ParkingTicketDTO extends BaseDTO {
     @ApiProperty({
-        name: 'ticketNo',
-        description: 'Ticket No. of Parking ticket',
-        example: 'No.001',
-        nullable: false,
-        required: true,
-        type: String,
-    })
-    @IsString()
-    @IsNotEmpty()
-    @Type(() => String)
-    ticketNo: string;
-
-    @ApiProperty({
-        name: 'licenseNo',
-        description: 'License No of Parking ticket',
-        example: faker.string.alphanumeric(10).toUpperCase(),
-        nullable: false,
-        required: true,
-        type: String,
-    })
-    @IsString()
-    @IsNotEmpty()
-    @Type(() => String)
-    licenseNo: string;
-
-    @ApiProperty({
-        name: 'timeIn',
-        description: 'Time in of parking ticket',
-        example: faker.date.recent(),
-        nullable: true,
-        required: false,
+        name: 'entryTime',
+        description: 'Entry time of parking ticket',
+        example: new Date(),
         type: Date,
+        nullable: false,
+        required: true,
     })
     @IsDate()
     @IsNotEmpty()
-    @IsOptional()
     @Type(() => Date)
-    timeIn?: Date;
+    entryTime: Date;
 
     @ApiProperty({
-        name: 'timeOut',
-        description: 'Time out of parking ticket',
-        example: faker.date.recent(),
-        nullable: true,
-        required: false,
+        name: 'exitTime',
+        description: 'Exit time of parking ticket',
+        example: new Date(),
         type: Date,
+        nullable: false,
+        required: true,
     })
     @IsDate()
-    @IsOptional()
-    @Type(() => Date)
-    timeOut?: Date;
-
-    @ApiProperty({
-        name: 'amount',
-        description: 'Amount of parking ticket',
-        example: 1000,
-        nullable: true,
-        required: false,
-        type: Number,
-    })
-    @IsNumber()
     @IsNotEmpty()
-    @Type(() => Number)
-    amount?: number;
+    @Type(() => Date)
+    exitTime: Date;
 
     @ApiProperty({
-        name: 'parkingLotId',
-        description: 'Parking lot id of parking ticket',
+        name: 'vehicleId',
+        description: 'Vehicle id of parking ticket',
         example: faker.string.uuid(),
+        type: String,
         nullable: false,
         required: true,
-        type: String,
     })
     @IsUUID()
     @IsNotEmpty()
     @Type(() => String)
-    parkingLotId: string;
+    vehicleId: string;
+
+    @ApiProperty({
+        name: 'paymentId',
+        description: 'Payment id of parking ticket',
+        example: faker.string.uuid(),
+        type: String,
+        nullable: false,
+        required: true,
+    })
+    @IsUUID()
+    @IsNotEmpty()
+    @Type(() => String)
+    paymentId: string;
 }

@@ -1,17 +1,17 @@
+import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { BaseDTO } from '../../../core/base/dto/base.dto';
-import { faker } from '@faker-js/faker';
-
+import { ENUM_VEHICLE_TYPE } from '../constants/vehicle.enum.constant';
 export class VehicleDTO extends BaseDTO {
     @ApiProperty({
         name: 'licenseNo',
         description: 'License No of vehicle',
         example: faker.string.alphanumeric(10).toUpperCase(),
-        nullable: true,
-        required: false,
         type: String,
+        nullable: false,
+        required: true,
     })
     @IsString()
     @IsNotEmpty()
@@ -19,12 +19,25 @@ export class VehicleDTO extends BaseDTO {
     licenseNo: string;
 
     @ApiProperty({
+        name: 'vehicleType',
+        description: 'Type of vehicle',
+        example: ENUM_VEHICLE_TYPE.MOTORCYCLE,
+        type: String,
+        nullable: false,
+        required: true,
+    })
+    @IsEnum(ENUM_VEHICLE_TYPE)
+    @IsNotEmpty()
+    @Type(() => String)
+    vehicleType: ENUM_VEHICLE_TYPE;
+
+    @ApiProperty({
         name: 'parkingSpotId',
         description: 'Parking spot id of vehicle',
         example: faker.string.uuid(),
+        type: String,
         nullable: false,
         required: true,
-        type: String,
     })
     @IsUUID()
     @IsNotEmpty()

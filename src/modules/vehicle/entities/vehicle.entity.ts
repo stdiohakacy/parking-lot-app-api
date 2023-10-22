@@ -1,15 +1,15 @@
-import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
-import { ParkingLotEntity } from '../../../modules/parking-lot/entities/parking-lot.entity';
-import { VehicleDTO } from '../dtos/vehicle.dto';
 import { ParkingSpotEntity } from '../../../modules/parking-spot/entities/parking-spot.entity';
-import { ParkingTicketEntity } from '../../../modules/parking-ticket/entities/parking-ticket.entity';
+import { VehicleDTO } from '../dtos/vehicle.dto';
 import { ENUM_VEHICLE_TYPE } from '../constants/vehicle.enum.constant';
+import { ParkingTicketEntity } from '../../../modules/parking-ticket/entities/parking-ticket.entity';
 
 export interface IVehicleEntity extends IBaseEntity<VehicleDTO> {
     licenseNo: string;
-    parkingSpotId?: string;
+    vehicleType: ENUM_VEHICLE_TYPE;
+    parkingSpotId: string;
 }
 
 @Entity({ name: 'vehicles' })
@@ -21,19 +21,19 @@ export class VehicleEntity
     @Column({ name: 'licenseNo' })
     licenseNo: string;
 
-    @Column({ name: 'parkingSpotId', type: 'uuid', nullable: true })
-    parkingSpotId?: string;
-
-    @Column({ name: 'vehicleType', type: 'text' })
+    @Column({ name: 'vehicleType' })
     vehicleType: ENUM_VEHICLE_TYPE;
+
+    @Column({ name: 'parkingSpotId', type: 'uuid', nullable: true })
+    parkingSpotId: string;
 
     @ManyToOne(() => ParkingSpotEntity, (parkingSpot) => parkingSpot.vehicles)
     @JoinColumn({ name: 'parkingSpotId' })
-    parkingSpot: ParkingSpotEntity;
+    parkingSpot?: ParkingSpotEntity;
 
     @OneToMany(
         () => ParkingTicketEntity,
         (parkingTickets) => parkingTickets.vehicle
     )
-    parkingTickets: ParkingTicketEntity[];
+    parkingTickets?: ParkingTicketEntity[];
 }

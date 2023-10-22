@@ -3,17 +3,14 @@ import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
 import { ParkingLotDTO } from '../dtos/parking-lot.dto';
 import { ParkingSpotEntity } from '../../../modules/parking-spot/entities/parking-spot.entity';
-import { EntranceEntity } from '../../../modules/entrance/entities/entrance.entity';
-import { ExitEntity } from '../../../modules/exit/entities/exit.entity';
-import { ParkingRateEntity } from '../../../modules/parking-rate/entities/parking-rate.entity';
-import { ParkingTicketEntity } from '../../../modules/parking-ticket/entities/parking-ticket.entity';
 
 export interface IParkingLotEntity extends IBaseEntity<ParkingLotDTO> {
     name: string;
     address: string;
+    capacity: number;
 }
 
-@Entity({ name: 'parking-lots' })
+@Entity({ name: 'parking_lots' })
 @UseDTO(ParkingLotDTO)
 export class ParkingLotEntity
     extends BaseEntity<ParkingLotDTO>
@@ -25,27 +22,12 @@ export class ParkingLotEntity
     @Column({ name: 'address' })
     address: string;
 
+    @Column({ name: 'capacity', type: 'int' })
+    capacity: number;
+
     @OneToMany(
         () => ParkingSpotEntity,
         (parkingSpots) => parkingSpots.parkingLot
     )
-    parkingSpots: ParkingSpotEntity[];
-
-    @OneToMany(() => EntranceEntity, (entrances) => entrances.parkingLot)
-    entrances: EntranceEntity[];
-
-    @OneToMany(() => ExitEntity, (exits) => exits.parkingLot)
-    exit: ExitEntity[];
-
-    @OneToMany(
-        () => ParkingRateEntity,
-        (parkingRates) => parkingRates.parkingLot
-    )
-    parkingRates: ParkingRateEntity[];
-
-    @OneToMany(
-        () => ParkingTicketEntity,
-        (parkingTickets) => parkingTickets.parkingLot
-    )
-    parkingTickets: ParkingTicketEntity[];
+    parkingSpots?: ParkingSpotEntity[];
 }
