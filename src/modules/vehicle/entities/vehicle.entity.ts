@@ -3,7 +3,7 @@ import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
 import { VehicleDTO } from '../dtos/vehicle.dto';
 import { ENUM_VEHICLE_TYPE } from '../constants/vehicle.enum.constant';
-import { ParkingSpotVehicleEntity } from 'src/modules/parking-spot/entities/parking-spot-vehicle.entity';
+import { ParkingSpotVehicleEntity } from '../../../modules/parking-spot/entities/parking-spot-vehicle.entity';
 
 export interface IVehicleEntity extends IBaseEntity<VehicleDTO> {
     licenseNo: string;

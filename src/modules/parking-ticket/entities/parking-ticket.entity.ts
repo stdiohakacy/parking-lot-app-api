@@ -2,9 +2,8 @@ import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { ParkingTicketDTO } from '../dtos/parking-ticket.dto';
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
-import { VehicleEntity } from '../../../modules/vehicle/entities/vehicle.entity';
 import { PaymentEntity } from '../../../modules/payment/entities/payment.entity';
-import { ParkingSpotVehicleEntity } from 'src/modules/parking-spot/entities/parking-spot-vehicle.entity';
+import { ParkingSpotVehicleEntity } from '../../../modules/parking-spot/entities/parking-spot-vehicle.entity';
 
 export interface IParkingTicketEntity extends IBaseEntity<ParkingTicketDTO> {
     entryTime: Date;

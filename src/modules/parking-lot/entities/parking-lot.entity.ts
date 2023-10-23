@@ -3,7 +3,7 @@ import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
 import { ParkingLotDTO } from '../dtos/parking-lot.dto';
 import { ParkingSpotEntity } from '../../../modules/parking-spot/entities/parking-spot.entity';
-import { ParkingRateEntity } from 'src/modules/parking-rate/entities/parking-rate.entity';
+import { ParkingRateEntity } from '../../../modules/parking-rate/entities/parking-rate.entity';
 
 export interface IParkingLotEntity extends IBaseEntity<ParkingLotDTO> {
     name: string;

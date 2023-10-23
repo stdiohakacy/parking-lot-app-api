@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
 import { ParkingRateDTO } from '../dtos/parking-rate.dto';
-import { ParkingLotEntity } from 'src/modules/parking-lot/entities/parking-lot.entity';
+import { ParkingLotEntity } from '../../../modules/parking-lot/entities/parking-lot.entity';
 
 export interface IParkingRateEntity extends IBaseEntity<ParkingRateDTO> {
     hours: number;
