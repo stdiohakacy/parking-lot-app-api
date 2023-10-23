@@ -1,4 +1,8 @@
 {
     "takeTicket": "Taked parking ticket!",
-    "scanTicket": "Scanned ticket!"
+    "scanTicket": "Scanned ticket!",
+    "error": {
+        "notFound": "Parking ticket not found!",
+        "alreadyUsed": "Parking ticket already used!"
+    }
 }

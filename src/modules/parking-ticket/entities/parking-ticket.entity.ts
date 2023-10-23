@@ -30,14 +30,18 @@ export class ParkingTicketEntity
     @Column({ name: 'paymentId', type: 'uuid', nullable: true })
     paymentId?: string;
 
-    @OneToOne(
-        () => ParkingSpotVehicleEntity
-        // (parkingSpotVehicle) => parkingSpotVehicle.parkingTicket
-    )
+    @OneToOne(() => ParkingSpotVehicleEntity)
     @JoinColumn({ name: 'parkingSpotVehicleId' })
     parkingSpotVehicle?: ParkingSpotVehicleEntity;
 
     @OneToOne(() => PaymentEntity, (payment) => payment.parkingTicket)
     @JoinColumn({ name: 'paymentId' })
     payment?: PaymentEntity;
+
+    paymentSucceed(data: { exitTime: Date; paymentId: string }) {
+        const { exitTime, paymentId } = data;
+        this.exitTime = exitTime;
+        this.paymentId = paymentId;
+        return this;
+    }
 }

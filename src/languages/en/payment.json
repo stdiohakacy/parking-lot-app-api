@@ -1,0 +1,6 @@
+{
+    "processPayment": "Payment succeed!",
+    "error": {
+        "unknownError": "Payment error!"
+    }
+}

@@ -38,10 +38,13 @@ export class ParkingTicketService {
             .getOne();
 
         const vehicle = parkingTicket.parkingSpotVehicle.vehicle;
-        const parkingDuration = this.helperDateService.diff(
-            parkingTicket.entryTime,
-            this.helperDateService.create(),
-            { format: ENUM_HELPER_DATE_DIFF.HOURS }
+
+        const parkingDuration = Math.round(
+            this.helperDateService.diff(
+                parkingTicket.entryTime,
+                this.helperDateService.create(),
+                { format: ENUM_HELPER_DATE_DIFF.HOURS }
+            )
         );
 
         const price = await this.parkingRateService.calculateParkingFree(

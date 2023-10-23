@@ -10,6 +10,8 @@ import { ParkingTicketModule } from 'src/modules/parking-ticket/parking-ticket.m
 import { ParkingTicketPublicController } from 'src/modules/parking-ticket/controllers/parking-ticket.public.controller';
 import { ParkingSpotPublicController } from 'src/modules/parking-spot/controllers/parking-spot.public.controller';
 import { ParkingSpotModule } from 'src/modules/parking-spot/parking-spot.module';
+import { PaymentPublicController } from 'src/modules/payment/controllers/payment.public.controller';
+import { PaymentModule } from 'src/modules/payment/payment.module';
 
 @Module({
     imports: [
@@ -20,6 +22,7 @@ import { ParkingSpotModule } from 'src/modules/parking-spot/parking-spot.module'
         UserModule,
         ParkingTicketModule,
         ParkingSpotModule,
+        PaymentModule,
     ],
     controllers: [
         HealthPublicController,
@@ -27,6 +30,7 @@ import { ParkingSpotModule } from 'src/modules/parking-spot/parking-spot.module'
         UserPublicController,
         ParkingTicketPublicController,
         ParkingSpotPublicController,
+        PaymentPublicController,
     ],
     providers: [],
     exports: [],

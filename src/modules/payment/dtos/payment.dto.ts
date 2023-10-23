@@ -9,7 +9,11 @@ import {
     IsUUID,
 } from 'class-validator';
 import { BaseDTO } from '../../../core/base/dto/base.dto';
-import { ENUM_PAYMENT_METHOD } from '../constants/payment.enum.constant';
+import {
+    ENUM_PAYMENT_METHOD,
+    ENUM_PAYMENT_STATUS,
+} from '../constants/payment.enum.constant';
+import { faker } from '@faker-js/faker';
 
 export class PaymentDTO extends BaseDTO {
     @ApiProperty({
@@ -49,5 +53,31 @@ export class PaymentDTO extends BaseDTO {
     @IsEnum(ENUM_PAYMENT_METHOD)
     @IsNotEmpty()
     @Type(() => String)
-    paymentMethod: string;
+    paymentMethod: ENUM_PAYMENT_METHOD;
+
+    @ApiProperty({
+        name: 'paymentStatus',
+        description: 'Status of payment',
+        example: ENUM_PAYMENT_STATUS.CREATED,
+        type: String,
+        nullable: false,
+        required: true,
+    })
+    @IsEnum(ENUM_PAYMENT_STATUS)
+    @IsNotEmpty()
+    @Type(() => String)
+    paymentStatus: ENUM_PAYMENT_STATUS;
+
+    @ApiProperty({
+        name: 'parkingTicketId',
+        description: 'Parking ticket id',
+        example: faker.string.uuid(),
+        type: String,
+        nullable: false,
+        required: true,
+    })
+    @IsUUID()
+    @IsNotEmpty()
+    @Type(() => String)
+    parkingTicketId: string;
 }
