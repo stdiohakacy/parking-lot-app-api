@@ -12,6 +12,6 @@ export class VehicleService {
     ) {}
 
     async create(dto: VehicleCreateDTO) {
-        await this.vehicleRepo.save(this.vehicleRepo.create(dto));
+        return await this.vehicleRepo.save(this.vehicleRepo.create(dto));
     }
 }

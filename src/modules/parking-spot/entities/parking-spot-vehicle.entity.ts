@@ -5,7 +5,6 @@ import { ParkingSpotDTO } from '../dtos/parking-spot.dto';
 import { ParkingSpotVehicleDTO } from '../dtos/parking-spot-vehicle.dto';
 import { ParkingSpotEntity } from './parking-spot.entity';
 import { VehicleEntity } from '../../../modules/vehicle/entities/vehicle.entity';
-import { ParkingTicketEntity } from '../../../modules/parking-ticket/entities/parking-ticket.entity';
 
 export interface IParkingSpotVehicleEntity
     extends IBaseEntity<ParkingSpotVehicleDTO> {
@@ -14,7 +13,7 @@ export interface IParkingSpotVehicleEntity
 }
 
 @Entity({ name: 'parking_spot_vehicles' })
-@UseDTO(ParkingSpotDTO)
+@UseDTO(ParkingSpotVehicleDTO)
 export class ParkingSpotVehicleEntity
     extends BaseEntity<ParkingSpotVehicleDTO>
     implements IParkingSpotVehicleEntity
@@ -24,9 +23,6 @@ export class ParkingSpotVehicleEntity
 
     @Column({ name: 'vehicleId', type: 'uuid' })
     vehicleId: string;
-
-    @Column({ name: 'parkingTicketId', type: 'uuid' })
-    parkingTicketId: string;
 
     @ManyToOne(
         () => ParkingSpotEntity,
@@ -38,11 +34,4 @@ export class ParkingSpotVehicleEntity
     @ManyToOne(() => VehicleEntity, (vehicle) => vehicle.parkingSpotVehicles)
     @JoinColumn({ name: 'vehicleId' })
     vehicle?: VehicleEntity;
-
-    @OneToOne(
-        () => ParkingTicketEntity,
-        (parkingTicket) => parkingTicket.parkingSpotVehicle
-    )
-    @JoinColumn({ name: 'parkingTicketId' })
-    parkingTicket?: ParkingTicketEntity;
 }

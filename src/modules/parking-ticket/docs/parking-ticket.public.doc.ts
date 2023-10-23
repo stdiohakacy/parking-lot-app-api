@@ -10,7 +10,7 @@ import { ParkingTicketDocParamsId } from '../constants/parking-ticket.doc.consta
 
 export function ParkingTicketPublicTakeTicketDoc(): MethodDecorator {
     return applyDecorators(
-        Doc({ operation: 'modules.public.parkingTickets' }),
+        Doc({ operation: 'modules.public.parking-ticket' }),
         DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
         DocResponse('parkingTicket.takeTicket', {
             httpStatus: HttpStatus.CREATED,
@@ -30,21 +30,3 @@ export function ParkingTicketPublicScanTicketDoc(): MethodDecorator {
         )
     );
 }
-
-// export function RoleAdminGetDoc(): MethodDecorator {
-//     return applyDecorators(
-//         Doc({
-//             operation: 'modules.admin.role',
-//         }),
-//         DocRequest({
-//             params: RoleDocParamsId,
-//         }),
-//         DocAuth({
-//             jwtAccessToken: true,
-//         }),
-//         DocGuard({ role: true, policy: true }),
-//         DocResponse<RoleGetSerialization>('role.get', {
-//             serialization: RoleGetSerialization,
-//         })
-//     );
-// }

@@ -8,7 +8,7 @@ import { ParkingSpotVehicleEntity } from '../../../modules/parking-spot/entities
 export interface IParkingTicketEntity extends IBaseEntity<ParkingTicketDTO> {
     entryTime: Date;
     exitTime?: Date;
-    vehicleId?: string;
+    parkingSpotVehicleId?: string;
     paymentId?: string;
 }
 
@@ -31,10 +31,10 @@ export class ParkingTicketEntity
     paymentId?: string;
 
     @OneToOne(
-        () => ParkingSpotVehicleEntity,
-        (parkingSpotVehicle) => parkingSpotVehicle.parkingTicket
+        () => ParkingSpotVehicleEntity
+        // (parkingSpotVehicle) => parkingSpotVehicle.parkingTicket
     )
-    @JoinColumn({ name: 'parkingSpotId' })
+    @JoinColumn({ name: 'parkingSpotVehicleId' })
     parkingSpotVehicle?: ParkingSpotVehicleEntity;
 
     @OneToOne(() => PaymentEntity, (payment) => payment.parkingTicket)

@@ -9,12 +9,18 @@ import { Repository } from 'typeorm';
 import { ParkingSpotParkVehicleDTO } from '../dtos/parking-spot.park-vehicle.dto';
 import { ENUM_PARKING_SPOT_STATUS_CODE_ERROR } from '../constants/parking-spot.status-code.constant';
 import { VehicleService } from '../../../modules/vehicle/services/vehicle.service';
+import { ParkingSpotVehicleEntity } from '../entities/parking-spot-vehicle.entity';
+import { ParkingTicketEntity } from 'src/modules/parking-ticket/entities/parking-ticket.entity';
 
 @Injectable()
 export class ParkingSpotService {
     constructor(
         @InjectRepository(ParkingSpotEntity)
         private readonly parkingSpotRepo: Repository<ParkingSpotEntity>,
+        @InjectRepository(ParkingSpotVehicleEntity)
+        private readonly parkingSpotVehicleRepo: Repository<ParkingSpotVehicleEntity>,
+        @InjectRepository(ParkingTicketEntity)
+        private readonly parkingTicketRepo: Repository<ParkingTicketEntity>,
         private readonly vehicleService: VehicleService
     ) {}
 
@@ -36,7 +42,7 @@ export class ParkingSpotService {
     }
 
     async parkVehicle(id: string, dto: ParkingSpotParkVehicleDTO) {
-        const { vehicleType, licenseNo } = dto;
+        const { vehicleType, licenseNo, parkingTicketId } = dto;
         const parkingSpot = await this.parkingSpotRepo.findOne({
             where: { id },
         });
@@ -61,14 +67,28 @@ export class ParkingSpotService {
             parkingSpot.spotUsed()
         );
 
-        try {
-            await this.vehicleService.create({
-                vehicleType,
-                licenseNo,
-                parkingSpotId: parkingSpotUpdated.id,
-            });
-        } catch (error) {
-            console.error(error);
+        const vehicleCreated = await this.vehicleService.create({
+            vehicleType,
+            licenseNo,
+        });
+
+        const parkingSpotVehicleCreated =
+            await this.parkingSpotVehicleRepo.save(
+                this.parkingSpotVehicleRepo.create({
+                    parkingSpotId: parkingSpotUpdated.id,
+                    vehicleId: vehicleCreated.id,
+                })
+            );
+        const parkingTicket = await this.parkingTicketRepo.findOne({
+            where: {
+                id: parkingTicketId,
+            },
+        });
+
+        if (!parkingTicket) {
         }
+
+        parkingTicket.parkingSpotVehicleId = parkingSpotVehicleCreated.id;
+        await this.parkingTicketRepo.save(parkingTicket);
     }
 }

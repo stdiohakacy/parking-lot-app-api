@@ -30,17 +30,4 @@ export class VehicleDTO extends BaseDTO {
     @IsNotEmpty()
     @Type(() => String)
     vehicleType: ENUM_VEHICLE_TYPE;
-
-    @ApiProperty({
-        name: 'parkingSpotId',
-        description: 'Parking spot id of vehicle',
-        example: faker.string.uuid(),
-        type: String,
-        nullable: false,
-        required: true,
-    })
-    @IsUUID()
-    @IsNotEmpty()
-    @Type(() => String)
-    parkingSpotId: string;
 }
