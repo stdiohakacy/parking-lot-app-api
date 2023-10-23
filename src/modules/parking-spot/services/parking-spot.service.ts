@@ -67,6 +67,8 @@ export class ParkingSpotService {
                 licenseNo,
                 parkingSpotId: parkingSpotUpdated.id,
             });
-        } catch (error) {}
+        } catch (error) {
+            console.error(error);
+        }
     }
 }

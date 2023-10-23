@@ -5,6 +5,7 @@ import { ParkingSpotDTO } from '../dtos/parking-spot.dto';
 import { ENUM_PARKING_SPOT_TYPE } from '../constants/parking-spot.enum.constant';
 import { ParkingLotEntity } from '../../../modules/parking-lot/entities/parking-lot.entity';
 import { VehicleEntity } from '../../../modules/vehicle/entities/vehicle.entity';
+import { ParkingSpotVehicleEntity } from './parking-spot-vehicle.entity';
 
 export interface IParkingSpotEntity extends IBaseEntity<ParkingSpotDTO> {
     parkingSpotType: ENUM_PARKING_SPOT_TYPE;
@@ -30,8 +31,11 @@ export class ParkingSpotEntity
     @JoinColumn({ name: 'parkingLotId' })
     parkingLot?: ParkingLotEntity;
 
-    @OneToMany(() => VehicleEntity, (vehicles) => vehicles.parkingSpot)
-    vehicles?: VehicleEntity[];
+    @OneToMany(
+        () => ParkingSpotVehicleEntity,
+        (parkingSpotVehicles) => parkingSpotVehicles.parkingSpot
+    )
+    parkingSpotVehicles?: ParkingSpotVehicleEntity[];
 
     spotUsed() {
         this.isFree = false;

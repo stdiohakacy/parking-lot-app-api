@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
 import { PaymentDTO } from '../dtos/payment.dto';
@@ -25,9 +25,13 @@ export class PaymentEntity
     @Column({ name: 'paymentMethod' })
     paymentMethod: string;
 
-    @OneToMany(
+    @Column({ name: 'parkingTicketId', type: 'uuid', nullable: true })
+    parkingTicketId?: string;
+
+    @OneToOne(
         () => ParkingTicketEntity,
-        (parkingTickets) => parkingTickets.payment
+        (parkingTicket) => parkingTicket.payment
     )
-    parkingTickets?: ParkingTicketEntity[];
+    @JoinColumn({ name: 'parkingTicketId' })
+    parkingTicket?: ParkingTicketEntity;
 }

@@ -1,9 +1,10 @@
 import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { ParkingTicketDTO } from '../dtos/parking-ticket.dto';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
 import { VehicleEntity } from '../../../modules/vehicle/entities/vehicle.entity';
 import { PaymentEntity } from '../../../modules/payment/entities/payment.entity';
+import { ParkingSpotVehicleEntity } from 'src/modules/parking-spot/entities/parking-spot-vehicle.entity';
 
 export interface IParkingTicketEntity extends IBaseEntity<ParkingTicketDTO> {
     entryTime: Date;
@@ -24,17 +25,20 @@ export class ParkingTicketEntity
     @Column({ name: 'exitTime', type: 'timestamptz', nullable: true })
     exitTime?: Date;
 
-    @Column({ name: 'vehicleId', type: 'uuid', nullable: true })
-    vehicleId?: string;
+    @Column({ name: 'parkingSpotVehicleId', type: 'uuid', nullable: true })
+    parkingSpotVehicleId?: string;
 
     @Column({ name: 'paymentId', type: 'uuid', nullable: true })
     paymentId?: string;
 
-    @ManyToOne(() => VehicleEntity, (vehicle) => vehicle.parkingTickets)
-    @JoinColumn({ name: 'vehicleId' })
-    vehicle?: VehicleEntity;
+    @OneToOne(
+        () => ParkingSpotVehicleEntity,
+        (parkingSpotVehicle) => parkingSpotVehicle.parkingTicket
+    )
+    @JoinColumn({ name: 'parkingSpotId' })
+    parkingSpotVehicle?: ParkingSpotVehicleEntity;
 
-    @ManyToOne(() => PaymentEntity, (payment) => payment.parkingTickets)
+    @OneToOne(() => PaymentEntity, (payment) => payment.parkingTicket)
     @JoinColumn({ name: 'paymentId' })
     payment?: PaymentEntity;
 }

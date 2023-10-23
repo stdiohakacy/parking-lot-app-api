@@ -18,4 +18,14 @@ export class ParkingTicketService {
         });
         return await this.parkingTicketRepo.save(parkingTicket);
     }
+
+    async scanTicket(id: string) {
+        const parkingTicket = await this.parkingTicketRepo
+            .createQueryBuilder('parkingTicket')
+            .leftJoinAndSelect('parkingTicket.vehicle', 'vehicle')
+            .where('parkingTicket.id = :id', { id })
+            .getOne();
+
+        console.log(parkingTicket);
+    }
 }
