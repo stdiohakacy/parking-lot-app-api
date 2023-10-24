@@ -5,6 +5,10 @@ import { ParkingSpotService } from './services/parking-spot.service';
 import { VehicleModule } from '../vehicle/vehicle.module';
 import { ParkingSpotVehicleEntity } from './entities/parking-spot-vehicle.entity';
 import { ParkingTicketEntity } from '../parking-ticket/entities/parking-ticket.entity';
+import { ParkingSpotEventService } from './events/parking-spot.event.service';
+
+const services = [ParkingSpotService, ParkingSpotEventService];
+
 @Module({
     imports: [
         TypeOrmModule.forFeature([
@@ -14,7 +18,7 @@ import { ParkingTicketEntity } from '../parking-ticket/entities/parking-ticket.e
         ]),
         VehicleModule,
     ],
-    providers: [ParkingSpotService],
-    exports: [ParkingSpotService],
+    providers: [...services],
+    exports: [...services],
 })
 export class ParkingSpotModule {}

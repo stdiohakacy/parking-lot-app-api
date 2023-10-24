@@ -1,3 +1,4 @@
+import { ParkingSpotEventService } from './../events/parking-spot.event.service';
 import {
     ConflictException,
     Injectable,
@@ -11,6 +12,9 @@ import { ENUM_PARKING_SPOT_STATUS_CODE_ERROR } from '../constants/parking-spot.s
 import { VehicleService } from '../../../modules/vehicle/services/vehicle.service';
 import { ParkingSpotVehicleEntity } from '../entities/parking-spot-vehicle.entity';
 import { ParkingTicketEntity } from 'src/modules/parking-ticket/entities/parking-ticket.entity';
+import { ENUM_PARKING_TICKET_STATUS_CODE_ERROR } from 'src/modules/parking-ticket/constants/parking-ticket.status-code.constant';
+import { OnEvent } from '@nestjs/event-emitter';
+import { ENUM_PARKING_SPOT_EVENT } from '../constants/parking-spot.enum.constant';
 
 @Injectable()
 export class ParkingSpotService {
@@ -21,7 +25,8 @@ export class ParkingSpotService {
         private readonly parkingSpotVehicleRepo: Repository<ParkingSpotVehicleEntity>,
         @InjectRepository(ParkingTicketEntity)
         private readonly parkingTicketRepo: Repository<ParkingTicketEntity>,
-        private readonly vehicleService: VehicleService
+        private readonly vehicleService: VehicleService,
+        private readonly parkingSpotEventService: ParkingSpotEventService
     ) {}
 
     async findAll() {
@@ -42,7 +47,6 @@ export class ParkingSpotService {
     }
 
     async parkVehicle(id: string, dto: ParkingSpotParkVehicleDTO) {
-        const { vehicleType, licenseNo, parkingTicketId } = dto;
         const parkingSpot = await this.parkingSpotRepo.findOne({
             where: { id },
         });
@@ -67,15 +71,23 @@ export class ParkingSpotService {
             parkingSpot.spotUsed()
         );
 
+        this.parkingSpotEventService.parkingSpotPark(
+            parkingSpotUpdated.id,
+            dto
+        );
+    }
+
+    @OnEvent(ENUM_PARKING_SPOT_EVENT.PARKING_SPOT_UPDATED)
+    async parkingSpotPark(id: string, dto: ParkingSpotParkVehicleDTO) {
+        const { vehicleType, licenseNo, parkingTicketId } = dto;
         const vehicleCreated = await this.vehicleService.create({
             vehicleType,
             licenseNo,
         });
-
         const parkingSpotVehicleCreated =
             await this.parkingSpotVehicleRepo.save(
                 this.parkingSpotVehicleRepo.create({
-                    parkingSpotId: parkingSpotUpdated.id,
+                    parkingSpotId: id,
                     vehicleId: vehicleCreated.id,
                 })
             );
@@ -84,10 +96,13 @@ export class ParkingSpotService {
                 id: parkingTicketId,
             },
         });
-
         if (!parkingTicket) {
+            throw new NotFoundException({
+                statusCode:
+                    ENUM_PARKING_TICKET_STATUS_CODE_ERROR.PARKING_TICKET_NOT_FOUND_ERROR,
+                message: 'parkingTicket.error.notFound',
+            });
         }
-
         parkingTicket.parkingSpotVehicleId = parkingSpotVehicleCreated.id;
         await this.parkingTicketRepo.save(parkingTicket);
     }

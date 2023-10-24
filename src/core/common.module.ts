@@ -20,6 +20,7 @@ import { DatabaseOptionService } from './database/services/database.options.serv
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { DataSource } from 'typeorm';
 import { BullCoreModule } from './queue/bull/bull.core.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
     controllers: [],
@@ -172,6 +173,7 @@ import { BullCoreModule } from './queue/bull/bull.core.module';
         ResponseModule,
         RequestModule,
         ApiKeyModule,
+        EventEmitterModule.forRoot(),
         DebuggerModule.forRoot(),
         AuthCoreModule.forRoot(),
     ],
