@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ValidationError } from 'class-validator';
-import { I18nService } from 'nestjs-i18n';
 import {
     IErrors,
     IErrorsImport,
@@ -52,6 +51,7 @@ export class MessageService implements IMessageService {
         key: string,
         options?: IMessageSetOptions
     ): string {
+        console.log(lang, key, options);
         return '';
         // return this.i18n.translate(key, {
         //     lang: lang,

@@ -18,6 +18,7 @@ export class MinioStorageProvider implements IStorage {
                 'storage.minio.secretKey'
             ),
         });
+        console.log(this.minioClient);
     }
 
     async uploadFile(
@@ -25,6 +26,9 @@ export class MinioStorageProvider implements IStorage {
         file: Buffer,
         options: any
     ): Promise<AwsS3Serialization> {
+        console.log(objectName);
+        console.log(file);
+        console.log(options);
         return {
             path: 'string',
             pathWithFilename: 'string',

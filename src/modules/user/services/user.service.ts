@@ -11,10 +11,7 @@ import {
     ENUM_USER_STATUS_CODE_SUCCESS,
 } from '../constants/user.status-code.constant';
 import { UserEntity } from '../entities/user.entity';
-import {
-    ENUM_USER_STATUS,
-    ENUM_USER_TYPE,
-} from '../constants/user.enum.constant';
+import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -31,8 +28,6 @@ import { IAuthPassword } from '../../../core/auth/interfaces/auth.interface';
 import { IFile } from '../../../core/file/interfaces/file.interface';
 import { HelperStringService } from '../../../core/helper/services/helper.string.service';
 import { StorageProviderFactory } from '../../../modules/storages/storage.provider.factory';
-import { IAwsS3PutItemOptions } from '../../../core/aws/interfaces/aws.interface';
-import { AwsS3Serialization } from '../../../core/aws/serializations/aws.s3.serialization';
 
 @Injectable()
 export class UserService {

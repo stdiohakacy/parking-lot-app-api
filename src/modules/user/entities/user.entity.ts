@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { UserDTO } from '../dtos/user.dto';
 import {
     ENUM_USER_STATUS,

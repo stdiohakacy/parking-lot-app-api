@@ -12,12 +12,10 @@ import {
     ValidateIf,
 } from 'class-validator';
 import { BaseDTO } from '../../../core/base/dto/base.dto';
-import { IsPasswordStrong } from '../../../core/request/validations/request.is-password-strong.validation';
 import {
     ENUM_USER_STATUS,
     ENUM_USER_TYPE,
 } from '../constants/user.enum.constant';
-import { MobileNumberAllowed } from '../../../core/request/validations/request.mobile-number-allowed.validation';
 
 export class UserDTO extends BaseDTO {
     @ApiProperty({
