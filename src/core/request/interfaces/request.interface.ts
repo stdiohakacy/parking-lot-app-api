@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { IApiKeyPayload } from 'src/core/api-key/interfaces/api-key.interface';
-import { RequestPaginationSerialization } from 'src/core/request/serializations/request.pagination.serialization';
+import { IApiKeyPayload } from '../../../core/api-key/interfaces/api-key.interface';
+import { RequestPaginationSerialization } from '../../../core/request/serializations/request.pagination.serialization';
 import { IResult } from 'ua-parser-js';
 
 export interface IRequestApp extends Request {

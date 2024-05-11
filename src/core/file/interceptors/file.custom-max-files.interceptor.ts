@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
-import { FILE_CUSTOM_MAX_FILES_META_KEY } from 'src/core/file/constants/file.constant';
+import { FILE_CUSTOM_MAX_FILES_META_KEY } from '../../../core/file/constants/file.constant';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()

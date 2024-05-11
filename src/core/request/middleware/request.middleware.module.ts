@@ -4,15 +4,15 @@ import {
     RequestRawBodyParserMiddleware,
     RequestTextBodyParserMiddleware,
     RequestUrlencodedBodyParserMiddleware,
-} from 'src/core/request/middleware/body-parser/request.body-parser.middleware';
-import { RequestCorsMiddleware } from 'src/core/request/middleware/cors/request.cors.middleware';
-import { RequestHelmetMiddleware } from 'src/core/request/middleware/helmet/request.helmet.middleware';
-import { RequestIdMiddleware } from 'src/core/request/middleware/id/request.id.middleware';
-import { RequestTimestampMiddleware } from 'src/core/request/middleware/timestamp/request.timestamp.middleware';
-import { RequestTimezoneMiddleware } from 'src/core/request/middleware/timezone/request.timezone.middleware';
-import { RequestUserAgentMiddleware } from 'src/core/request/middleware/user-agent/request.user-agent.middleware';
+} from '../../../core/request/middleware/body-parser/request.body-parser.middleware';
+import { RequestCorsMiddleware } from '../../../core/request/middleware/cors/request.cors.middleware';
+import { RequestHelmetMiddleware } from '../../../core/request/middleware/helmet/request.helmet.middleware';
+import { RequestIdMiddleware } from '../../../core/request/middleware/id/request.id.middleware';
+import { RequestTimestampMiddleware } from '../../../core/request/middleware/timestamp/request.timestamp.middleware';
+import { RequestTimezoneMiddleware } from '../../../core/request/middleware/timezone/request.timezone.middleware';
+import { RequestUserAgentMiddleware } from '../../../core/request/middleware/user-agent/request.user-agent.middleware';
 
-import { RequestVersionMiddleware } from 'src/core/request/middleware/version/request.version.middleware';
+import { RequestVersionMiddleware } from '../../../core/request/middleware/version/request.version.middleware';
 
 @Module({})
 export class RequestMiddlewareModule implements NestModule {

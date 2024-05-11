@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import Strategy from 'passport-headerapikey';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from 'src/core/api-key/constants/api-key.status-code.constant';
-import { ApiKeyService } from 'src/core/api-key/services/api-key.service';
-import { HelperDateService } from 'src/core/helper/services/helper.date.service';
-import { IRequestApp } from 'src/core/request/interfaces/request.interface';
-import { ApiKeyEntity } from 'src/modules/api-key/entities/api-key.entity';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../../../core/api-key/constants/api-key.status-code.constant';
+import { ApiKeyService } from '../../../../core/api-key/services/api-key.service';
+import { HelperDateService } from '../../../../core/helper/services/helper.date.service';
+import { IRequestApp } from '../../../../core/request/interfaces/request.interface';
+import { ApiKeyEntity } from '../../../../modules/api-key/entities/api-key.entity';
 
 @Injectable()
 export class ApiKeyXApiKeyStrategy extends PassportStrategy(

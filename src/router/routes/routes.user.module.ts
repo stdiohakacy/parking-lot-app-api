@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ApiKeyModule } from 'src/core/api-key/api-key.module';
+import { ApiKeyModule } from '../../core/api-key/api-key.module';
 
 @Module({
     controllers: [],

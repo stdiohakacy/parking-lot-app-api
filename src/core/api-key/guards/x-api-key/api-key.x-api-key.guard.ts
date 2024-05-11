@@ -5,8 +5,8 @@ import {
     Injectable,
     UnauthorizedException,
 } from '@nestjs/common';
-import { HelperNumberService } from 'src/core/helper/services/helper.number.service';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from 'src/core/api-key/constants/api-key.status-code.constant';
+import { HelperNumberService } from '../../../../core/helper/services/helper.number.service';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../../../core/api-key/constants/api-key.status-code.constant';
 import { BadRequestError } from 'passport-headerapikey';
 
 @Injectable()

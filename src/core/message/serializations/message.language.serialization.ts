@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ENUM_MESSAGE_LANGUAGE } from 'src/core/message/constants/message.enum.constant';
+import { ENUM_MESSAGE_LANGUAGE } from '../../../core/message/constants/message.enum.constant';
 
 export class MessageLanguageSerialization {
     @ApiProperty({

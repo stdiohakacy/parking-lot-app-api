@@ -1,13 +1,13 @@
 import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
-import { AppHelloApiKeyDoc, AppHelloDoc } from 'src/app/docs/app.doc';
-import { AppHelloSerialization } from 'src/app/serializations/app.hello.serialization';
-import { ApiKeyPublicProtected } from 'src/core/api-key/decorators/api-key.decorator';
-import { HelperDateService } from 'src/core/helper/services/helper.date.service';
-import { RequestUserAgent } from 'src/core/request/decorators/request.decorator';
-import { Response } from 'src/core/response/decorators/response.decorator';
-import { IResponse } from 'src/core/response/interfaces/response.interface';
+import { AppHelloApiKeyDoc, AppHelloDoc } from '../../app/docs/app.doc';
+import { AppHelloSerialization } from '../../app/serializations/app.hello.serialization';
+import { ApiKeyPublicProtected } from '../../core/api-key/decorators/api-key.decorator';
+import { HelperDateService } from '../../core/helper/services/helper.date.service';
+import { RequestUserAgent } from '../../core/request/decorators/request.decorator';
+import { Response } from '../../core/response/decorators/response.decorator';
+import { IResponse } from '../../core/response/interfaces/response.interface';
 import { IResult } from 'ua-parser-js';
 
 @ApiTags('hello')

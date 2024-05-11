@@ -6,14 +6,14 @@ import {
     IErrors,
     IErrorsImport,
     IValidationErrorImport,
-} from 'src/core/error/interfaces/error.interface';
-import { HelperArrayService } from 'src/core/helper/services/helper.array.service';
+} from '../../../core/error/interfaces/error.interface';
+import { HelperArrayService } from '../../../core/helper/services/helper.array.service';
 import {
     IMessageErrorOptions,
     IMessageOptions,
     IMessageSetOptions,
-} from 'src/core/message/interfaces/message.interface';
-import { IMessageService } from 'src/core/message/interfaces/message.service.interface';
+} from '../../../core/message/interfaces/message.interface';
+import { IMessageService } from '../../../core/message/interfaces/message.service.interface';
 
 @Injectable()
 export class MessageService implements IMessageService {
@@ -21,7 +21,7 @@ export class MessageService implements IMessageService {
     private readonly appDefaultAvailableLanguage: string[];
 
     constructor(
-        private readonly i18n: I18nService,
+        // private readonly i18n: I18nService,
         private readonly configService: ConfigService,
         private readonly helperArrayService: HelperArrayService
     ) {
@@ -52,10 +52,11 @@ export class MessageService implements IMessageService {
         key: string,
         options?: IMessageSetOptions
     ): string {
-        return this.i18n.translate(key, {
-            lang: lang,
-            args: options?.properties,
-        }) as any;
+        return '';
+        // return this.i18n.translate(key, {
+        //     lang: lang,
+        //     args: options?.properties,
+        // }) as any;
     }
 
     getRequestErrorsMessage(

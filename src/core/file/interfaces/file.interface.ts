@@ -1,4 +1,4 @@
-import { IHelperFileRows } from 'src/core/helper/interfaces/helper.interface';
+import { IHelperFileRows } from '../../../core/helper/interfaces/helper.interface';
 
 export type IFile = Omit<Express.Multer.File, 'filename'>;
 

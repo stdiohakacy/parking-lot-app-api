@@ -108,7 +108,7 @@ export class UserDTO extends BaseDTO {
     @ApiProperty({
         name: 'type',
         description: 'user type',
-        example: ENUM_USER_TYPE.PARKING_AGENT,
+        example: ENUM_USER_TYPE.MEMBER,
         required: true,
     })
     @IsEnum(ENUM_USER_TYPE)

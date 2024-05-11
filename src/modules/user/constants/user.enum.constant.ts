@@ -13,6 +13,8 @@ export enum ENUM_USER_STATUS {
 }
 
 export enum ENUM_USER_TYPE {
-    ADMIN = 'admin',
-    PARKING_AGENT = 'parking_agent',
+    SUPER_ADMIN = 'super_admin',
+    MEMBER = 'member',
+    MANAGER = 'manager',
+    RECEPTIONIST = 'receptionist',
 }

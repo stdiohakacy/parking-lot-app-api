@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { IRequestApp } from 'src/core/request/interfaces/request.interface';
-import { UserService } from 'src/modules/user/services/user.service';
+import { IRequestApp } from '../../../../core/request/interfaces/request.interface';
+import { UserService } from '../../../../modules/user/services/user.service';
 import { UserEntity } from '../../entities/user.entity';
 
 @Injectable()

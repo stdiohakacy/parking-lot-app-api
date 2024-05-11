@@ -8,7 +8,7 @@ import { UserPayloadSerialization } from '../serializations/user.payload.seriali
 import { plainToInstance } from 'class-transformer';
 import { BaseEntity, IBaseEntity } from '../../../core/base/entity/base.entity';
 import { UseDTO } from '../../../core/base/decorator/use-dto.decorator';
-import { IAuthPassword } from 'src/core/auth/interfaces/auth.interface';
+import { IAuthPassword } from '../../../core/auth/interfaces/auth.interface';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username: string;
@@ -39,7 +39,7 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     @Column({
         name: 'type',
         enum: ENUM_USER_TYPE,
-        default: ENUM_USER_TYPE.PARKING_AGENT,
+        default: ENUM_USER_TYPE.MEMBER,
     })
     type: ENUM_USER_TYPE;
 
@@ -70,7 +70,7 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     register(payload: any) {
         this.username = payload?.username || '';
         this.password = payload?.password || '';
-        this.type = payload?.type || ENUM_USER_TYPE.PARKING_AGENT;
+        this.type = payload?.type || ENUM_USER_TYPE.MEMBER;
         this.name = payload?.name || '';
         this.address = payload?.address || '';
         this.email = payload?.email || '';

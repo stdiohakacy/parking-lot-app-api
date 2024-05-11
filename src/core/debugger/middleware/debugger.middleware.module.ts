@@ -4,7 +4,7 @@ import {
     DebuggerHttpResponseMiddleware,
     DebuggerHttpWriteIntoConsoleMiddleware,
     DebuggerHttpWriteIntoFileMiddleware,
-} from 'src/core/debugger/middleware/http/debugger.http.middleware';
+} from '../../../core/debugger/middleware/http/debugger.http.middleware';
 
 @Module({})
 export class DebuggerMiddlewareModule implements NestModule {

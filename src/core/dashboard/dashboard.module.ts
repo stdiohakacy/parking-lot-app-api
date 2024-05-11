@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DashboardService } from 'src/core/dashboard/services/dashboard.service';
+import { DashboardService } from '../../core/dashboard/services/dashboard.service';
 
 @Module({
     controllers: [],

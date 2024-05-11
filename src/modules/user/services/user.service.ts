@@ -5,7 +5,7 @@ import {
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
-import { AuthService } from 'src/core/auth/services/auth.service';
+import { AuthService } from '../../../core/auth/services/auth.service';
 import {
     ENUM_USER_STATUS_CODE_ERROR,
     ENUM_USER_STATUS_CODE_SUCCESS,
@@ -19,26 +19,20 @@ import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserLoginDTO } from '../dtos/user.login.dto';
-import { ENUM_AUTH_LOGIN_WITH } from 'src/core/auth/constants/auth.enum.constant';
+import { ENUM_AUTH_LOGIN_WITH } from '../../../core/auth/constants/auth.enum.constant';
 import { randomBytes } from 'crypto';
-import { HelperDateService } from 'src/core/helper/services/helper.date.service';
-import { IMailParamsAccountActivation } from 'src/modules/email/interfaces/email.interface';
-import {
-    ENUM_MAIL_SUBJECT,
-    ENUM_MAIL_TEMPLATE_KEY,
-} from 'src/modules/email/constants/email.enum.constant';
-import { EmailProviderFactory } from 'src/modules/email/providers/email.provider.factory';
+import { HelperDateService } from '../../../core/helper/services/helper.date.service';
 import { ConfigService } from '@nestjs/config';
 import { UserActiveDTO } from '../dtos/user.active.dto';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { plainToInstance } from 'class-transformer';
 import { UserChangePasswordDTO } from '../dtos/user.change-password.dto';
-import { IAuthPassword } from 'src/core/auth/interfaces/auth.interface';
-import { IFile } from 'src/core/file/interfaces/file.interface';
-import { HelperStringService } from 'src/core/helper/services/helper.string.service';
-import { StorageProviderFactory } from 'src/modules/storages/storage.provider.factory';
-import { IAwsS3PutItemOptions } from 'src/core/aws/interfaces/aws.interface';
-import { AwsS3Serialization } from 'src/core/aws/serializations/aws.s3.serialization';
+import { IAuthPassword } from '../../../core/auth/interfaces/auth.interface';
+import { IFile } from '../../../core/file/interfaces/file.interface';
+import { HelperStringService } from '../../../core/helper/services/helper.string.service';
+import { StorageProviderFactory } from '../../../modules/storages/storage.provider.factory';
+import { IAwsS3PutItemOptions } from '../../../core/aws/interfaces/aws.interface';
+import { AwsS3Serialization } from '../../../core/aws/serializations/aws.s3.serialization';
 
 @Injectable()
 export class UserService {
@@ -48,7 +42,6 @@ export class UserService {
         private userRepo: Repository<UserEntity>,
         private readonly authService: AuthService,
         private readonly helperDateService: HelperDateService,
-        private readonly emailProviderFactory: EmailProviderFactory,
         private readonly storageProviderFactory: StorageProviderFactory,
         private readonly configService: ConfigService,
         private readonly helperStringService: HelperStringService
@@ -103,7 +96,7 @@ export class UserService {
     }
 
     async register(payload: UserRegisterDTO): Promise<UserEntity> {
-        const { username, password, email } = payload;
+        const { username, password } = payload;
 
         const isUsernameExist = await this.userRepo.findOne({
             where: { username },
@@ -124,27 +117,6 @@ export class UserService {
             { fromDate: new Date() }
         );
 
-        const emailProvider = this.emailProviderFactory.initProvider();
-
-        const htmlContent: string =
-            emailProvider.getContentEmail<IMailParamsAccountActivation>(
-                ENUM_MAIL_TEMPLATE_KEY.ACCOUNT_ACTIVATION,
-                {
-                    username,
-                    activationLink: `http://${this.configService.get<string>(
-                        'app.http.host'
-                    )}:${this.configService.get<string>(
-                        'app.http.port'
-                    )}/confirm-account?username=${username}&key=${activeKey}`,
-                }
-            );
-
-        emailProvider.send(
-            [email],
-            ENUM_MAIL_SUBJECT.ACCOUNT_ACTIVATION,
-            htmlContent
-        );
-
         const user = new UserEntity().register({
             ...payload,
             activeKey,
@@ -152,7 +124,6 @@ export class UserService {
             password: passwordAuth,
         });
         return await this.userRepo.save(user);
-        // return user;
     }
 
     async login(payload: UserLoginDTO) {

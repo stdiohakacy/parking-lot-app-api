@@ -8,7 +8,7 @@ import {
 import { UserPayloadPutToRequestGuard } from '../guards/payload/user.payload.put-to-request.guard';
 import { UserNotFoundGuard } from '../guards/user.not-found.guard';
 import { UserEntity } from '../entities/user.entity';
-import { IRequestApp } from 'src/core/request/interfaces/request.interface';
+import { IRequestApp } from '../../../core/request/interfaces/request.interface';
 import { USER_ACTIVE_META_KEY } from '../constants/user.constant';
 import { UserActiveGuard } from '../guards/user.active.guard';
 

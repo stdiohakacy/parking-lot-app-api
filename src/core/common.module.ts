@@ -1,23 +1,26 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { DebuggerModule } from 'src/core/debugger/debugger.module';
-import { HelperModule } from 'src/core/helper/helper.module';
-import { ErrorModule } from 'src/core/error/error.module';
-import { ResponseModule } from 'src/core/response/response.module';
-import { RequestModule } from 'src/core/request/request.module';
-import { AuthCoreModule } from 'src/core/auth/auth.core.module';
-import { MessageModule } from 'src/core/message/message.module';
-import { PaginationModule } from 'src/core/pagination/pagination.module';
+import { DebuggerModule } from '../core/debugger/debugger.module';
+import { HelperModule } from '../core/helper/helper.module';
+import { ErrorModule } from '../core/error/error.module';
+import { ResponseModule } from '../core/response/response.module';
+import { RequestModule } from '../core/request/request.module';
+import { AuthCoreModule } from '../core/auth/auth.core.module';
+import { MessageModule } from '../core/message/message.module';
+import { PaginationModule } from '../core/pagination/pagination.module';
 import Joi from 'joi';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constants/message.enum.constant';
-import configs from 'src/configs';
-import { ApiKeyModule } from 'src/core/api-key/api-key.module';
-import { DatabaseOptionsModule } from 'src/core/database/database.options.module';
-import { ENUM_APP_ENVIRONMENT } from 'src/app/constants/app.enum.constant';
-import { APP_LANGUAGE } from 'src/app/constants/app.constant';
+import configs from '../configs';
+import { ApiKeyModule } from '../core/api-key/api-key.module';
+import { DatabaseOptionsModule } from '../core/database/database.options.module';
+import { ENUM_APP_ENVIRONMENT } from '../app/constants/app.enum.constant';
+import { APP_LANGUAGE } from '../app/constants/app.constant';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseOptionService } from './database/services/database.options.service';
-import { addTransactionalDataSource } from 'typeorm-transactional';
+import {
+    addTransactionalDataSource,
+    getDataSourceByName,
+} from 'typeorm-transactional';
 import { DataSource } from 'typeorm';
 import { BullCoreModule } from './queue/bull/bull.core.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -162,7 +165,11 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
                 if (!options) {
                     throw new Error('Invalid options passed');
                 }
-                return addTransactionalDataSource(new DataSource(options));
+                return (
+                    getDataSourceByName('default') ||
+                    addTransactionalDataSource(new DataSource(options))
+                );
+                // return addTransactionalDataSource(new DataSource(options));
             },
         }),
         BullCoreModule,

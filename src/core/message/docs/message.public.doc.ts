@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
-import { Doc, DocResponse } from 'src/core/doc/decorators/doc.decorator';
-import { MessageLanguageSerialization } from 'src/core/message/serializations/message.language.serialization';
+import { Doc, DocResponse } from '../../../core/doc/decorators/doc.decorator';
+import { MessageLanguageSerialization } from '../../../core/message/serializations/message.language.serialization';
 
 export function MessagePublicLanguageDoc(): MethodDecorator {
     return applyDecorators(

@@ -1,5 +1,5 @@
-import { ENUM_API_KEY_TYPE } from 'src/core/api-key/constants/api-key.enum.constant';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from 'src/core/pagination/constants/pagination.enum.constant';
+import { ENUM_API_KEY_TYPE } from '../../../core/api-key/constants/api-key.enum.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../core/pagination/constants/pagination.enum.constant';
 
 export const API_KEY_DEFAULT_PER_PAGE = 20;
 export const API_KEY_DEFAULT_ORDER_BY = 'createdAt';

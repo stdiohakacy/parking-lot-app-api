@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { seconds } from 'src/core/helper/constants/helper.function.constant';
+import { seconds } from '../core/helper/constants/helper.function.constant';
 
 export default registerAs(
     'helper',

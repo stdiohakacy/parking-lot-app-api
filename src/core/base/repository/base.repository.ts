@@ -1,5 +1,5 @@
 import { UpdateResult, DeleteResult, InsertResult } from 'typeorm';
-import { PaginationListDto } from 'src/core/pagination/dtos/pagination.list.dto';
+import { PaginationListDto } from '../../../core/pagination/dtos/pagination.list.dto';
 
 export abstract class BaseRepository<T> {
     abstract findOneById(id: string);

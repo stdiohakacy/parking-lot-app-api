@@ -2,8 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { faker } from '@faker-js/faker';
 import { IsDate, IsNotEmpty } from 'class-validator';
 import { Type } from 'class-transformer';
-import { GreaterThanEqual } from 'src/core/request/validations/request.greater-than-equal.validation';
-import { DateGreaterThanEqualToday } from 'src/core/request/validations/request.date-greater-than-equal-today.validation';
+import { GreaterThanEqual } from '../../../core/request/validations/request.greater-than-equal.validation';
+import { DateGreaterThanEqualToday } from '../../../core/request/validations/request.date-greater-than-equal-today.validation';
 
 export class ApiKeyUpdateDateDto {
     @ApiProperty({

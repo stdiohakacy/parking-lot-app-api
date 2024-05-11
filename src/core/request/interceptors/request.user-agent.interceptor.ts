@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Observable } from 'rxjs';
-import { ENUM_REQUEST_STATUS_CODE_ERROR } from 'src/core/request/constants/request.status-code.constant';
-import { IRequestApp } from 'src/core/request/interfaces/request.interface';
+import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../../../core/request/constants/request.status-code.constant';
+import { IRequestApp } from '../../../core/request/interfaces/request.interface';
 import { IResult } from 'ua-parser-js';
 
 @Injectable()

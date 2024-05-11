@@ -1,8 +1,8 @@
 import { registerAs } from '@nestjs/config';
 import bytes from 'bytes';
 import ms from 'ms';
-import { seconds } from 'src/core/helper/constants/helper.function.constant';
-import { ENUM_REQUEST_METHOD } from 'src/core/request/constants/request.enum.constant';
+import { seconds } from '../core/helper/constants/helper.function.constant';
+import { ENUM_REQUEST_METHOD } from '../core/request/constants/request.enum.constant';
 
 export default registerAs(
     'request',

@@ -1,9 +1,9 @@
 import { Inject, Injectable, mixin, Type } from '@nestjs/common';
 import { PipeTransform, Scope } from '@nestjs/common/interfaces';
 import { REQUEST } from '@nestjs/core';
-import { HelperNumberService } from 'src/core/helper/services/helper.number.service';
-import { PaginationService } from 'src/core/pagination/services/pagination.service';
-import { IRequestApp } from 'src/core/request/interfaces/request.interface';
+import { HelperNumberService } from '../../../core/helper/services/helper.number.service';
+import { PaginationService } from '../../../core/pagination/services/pagination.service';
+import { IRequestApp } from '../../../core/request/interfaces/request.interface';
 
 export function PaginationPagingPipe(
     defaultPerPage: number

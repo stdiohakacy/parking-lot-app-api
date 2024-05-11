@@ -1,5 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { ResponseTimeMiddleware } from 'src/core/response/middleware/time/response.time.middleware';
+import { ResponseTimeMiddleware } from '../../../core/response/middleware/time/response.time.middleware';
 
 @Module({})
 export class ResponseMiddlewareModule implements NestModule {

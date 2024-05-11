@@ -7,14 +7,14 @@ import {
 import { PipeTransform } from '@nestjs/common/interfaces';
 import { validate, ValidationError } from 'class-validator';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
-import { IValidationErrorImport } from 'src/core/error/interfaces/error.interface';
+import { IValidationErrorImport } from '../../../core/error/interfaces/error.interface';
 import {
     IFileExtract,
     IFileExtractAllSheets,
-} from 'src/core/file/interfaces/file.interface';
-import { ENUM_FILE_EXCEL_MIME } from 'src/core/file/constants/file.enum.constant';
-import { ENUM_FILE_STATUS_CODE_ERROR } from 'src/core/file/constants/file.status-code.constant';
-import { ERROR_TYPE } from 'src/core/error/constants/error.enum.constant';
+} from '../../../core/file/interfaces/file.interface';
+import { ENUM_FILE_EXCEL_MIME } from '../../../core/file/constants/file.enum.constant';
+import { ENUM_FILE_STATUS_CODE_ERROR } from '../../../core/file/constants/file.status-code.constant';
+import { ERROR_TYPE } from '../../../core/error/constants/error.enum.constant';
 
 // only for excel
 // must use after FileExtractPipe

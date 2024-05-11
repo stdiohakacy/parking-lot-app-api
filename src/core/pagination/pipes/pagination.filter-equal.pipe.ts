@@ -1,11 +1,11 @@
 import { Inject, Injectable, mixin, Type } from '@nestjs/common';
 import { PipeTransform, Scope } from '@nestjs/common/interfaces';
 import { REQUEST } from '@nestjs/core';
-import { HelperNumberService } from 'src/core/helper/services/helper.number.service';
-import { ENUM_PAGINATION_FILTER_CASE_OPTIONS } from 'src/core/pagination/constants/pagination.enum.constant';
-import { IPaginationFilterStringEqualOptions } from 'src/core/pagination/interfaces/pagination.interface';
-import { PaginationService } from 'src/core/pagination/services/pagination.service';
-import { IRequestApp } from 'src/core/request/interfaces/request.interface';
+import { HelperNumberService } from '../../../core/helper/services/helper.number.service';
+import { ENUM_PAGINATION_FILTER_CASE_OPTIONS } from '../../../core/pagination/constants/pagination.enum.constant';
+import { IPaginationFilterStringEqualOptions } from '../../../core/pagination/interfaces/pagination.interface';
+import { PaginationService } from '../../../core/pagination/services/pagination.service';
+import { IRequestApp } from '../../../core/request/interfaces/request.interface';
 
 export function PaginationFilterEqualPipe(
     field: string,

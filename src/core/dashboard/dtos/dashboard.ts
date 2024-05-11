@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsDate, IsOptional, ValidateIf } from 'class-validator';
-import { GreaterThanEqual } from 'src/core/request/validations/request.greater-than-equal.validation';
+import { GreaterThanEqual } from '../../../core/request/validations/request.greater-than-equal.validation';
 
 export class DashboardDto {
     @ApiProperty({

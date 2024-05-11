@@ -12,7 +12,7 @@ import {
 import { ApiKeyUpdateDto } from '../dtos/api-key.update.dto';
 import { ApiKeyUpdateDateDto } from '../dtos/api-key.update-date.dto';
 import { HelperDateService } from '../../helper/services/helper.date.service';
-import { ApiKeyEntity } from 'src/modules/api-key/entities/api-key.entity';
+import { ApiKeyEntity } from '../../../modules/api-key/entities/api-key.entity';
 
 @Injectable()
 export class ApiKeyService implements IApiKeyService {

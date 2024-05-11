@@ -7,7 +7,7 @@ import {
     ValidatorConstraint,
     ValidatorConstraintInterface,
 } from 'class-validator';
-import { ENUM_FILE_TYPE } from 'src/core/file/constants/file.enum.constant';
+import { ENUM_FILE_TYPE } from '../../../core/file/constants/file.enum.constant';
 
 @ValidatorConstraint({ async: true })
 @Injectable()

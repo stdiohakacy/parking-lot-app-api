@@ -1,5 +1,5 @@
-import { ENUM_API_KEY_TYPE } from 'src/core/api-key/constants/api-key.enum.constant';
-import { ApiKeyEntity } from 'src/modules/api-key/entities/api-key.entity';
+import { ENUM_API_KEY_TYPE } from '../../../core/api-key/constants/api-key.enum.constant';
+import { ApiKeyEntity } from '../../../modules/api-key/entities/api-key.entity';
 
 export interface IApiKeyPayload {
     _id: string;

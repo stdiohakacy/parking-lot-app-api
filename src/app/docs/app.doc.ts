@@ -1,11 +1,11 @@
 import { applyDecorators } from '@nestjs/common';
-import { AppHelloSerialization } from 'src/app/serializations/app.hello.serialization';
+import { AppHelloSerialization } from '../../app/serializations/app.hello.serialization';
 import {
     Doc,
     DocAuth,
     DocGuard,
     DocResponse,
-} from 'src/core/doc/decorators/doc.decorator';
+} from '../../core/doc/decorators/doc.decorator';
 
 export function AppHelloDoc(): MethodDecorator {
     return applyDecorators(

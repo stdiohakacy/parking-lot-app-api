@@ -14,10 +14,10 @@ import {
     ApiSecurity,
     getSchemaPath,
 } from '@nestjs/swagger';
-import { APP_LANGUAGE } from 'src/app/constants/app.constant';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from 'src/core/api-key/constants/api-key.status-code.constant';
-import { ENUM_AUTH_STATUS_CODE_ERROR } from 'src/core/auth/constants/auth.status-code.constant';
-import { ENUM_DOC_REQUEST_BODY_TYPE } from 'src/core/doc/constants/doc.enum.constant';
+import { APP_LANGUAGE } from '../../../app/constants/app.constant';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../../core/api-key/constants/api-key.status-code.constant';
+import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../core/auth/constants/auth.status-code.constant';
+import { ENUM_DOC_REQUEST_BODY_TYPE } from '../../../core/doc/constants/doc.enum.constant';
 import {
     IDocGuardOptions,
     IDocOptions,
@@ -25,21 +25,21 @@ import {
     IDocRequestOptions,
     IDocResponseFileOptions,
     IDocResponsePagingOptions,
-} from 'src/core/doc/interfaces/doc.interface';
+} from '../../../core/doc/interfaces/doc.interface';
 import {
     IDocAuthOptions,
     IDocDefaultOptions,
     IDocOfOptions,
     IDocResponseOptions,
-} from 'src/core/doc/interfaces/doc.interface';
-import { ENUM_ERROR_STATUS_CODE_ERROR } from 'src/core/error/constants/error.status-code.constant';
-import { ENUM_FILE_EXCEL_MIME } from 'src/core/file/constants/file.enum.constant';
-import { FileMultipleDto } from 'src/core/file/dtos/file.multiple.dto';
-import { FileSingleDto } from 'src/core/file/dtos/file.single.dto';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from 'src/core/pagination/constants/pagination.enum.constant';
-import { ENUM_REQUEST_STATUS_CODE_ERROR } from 'src/core/request/constants/request.status-code.constant';
-import { ResponseDefaultSerialization } from 'src/core/response/serializations/response.default.serialization';
-import { ResponsePagingSerialization } from 'src/core/response/serializations/response.paging.serialization';
+} from '../../../core/doc/interfaces/doc.interface';
+import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../core/error/constants/error.status-code.constant';
+import { ENUM_FILE_EXCEL_MIME } from '../../../core/file/constants/file.enum.constant';
+import { FileMultipleDto } from '../../../core/file/dtos/file.multiple.dto';
+import { FileSingleDto } from '../../../core/file/dtos/file.single.dto';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../core/pagination/constants/pagination.enum.constant';
+import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../../../core/request/constants/request.status-code.constant';
+import { ResponseDefaultSerialization } from '../../../core/response/serializations/response.default.serialization';
+import { ResponsePagingSerialization } from '../../../core/response/serializations/response.paging.serialization';
 
 export function DocDefault<T>(options: IDocDefaultOptions): MethodDecorator {
     const docs = [];

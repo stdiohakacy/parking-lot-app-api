@@ -1,4 +1,4 @@
-import { IPaginationOrder } from 'src/core/pagination/interfaces/pagination.interface';
+import { IPaginationOrder } from '../../../core/pagination/interfaces/pagination.interface';
 
 export interface IPaginationService {
     offset(page: number, perPage: number): number;

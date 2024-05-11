@@ -7,8 +7,8 @@ import {
 import { Reflector } from '@nestjs/core';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
-import { REQUEST_PARAM_CLASS_DTOS_META_KEY } from 'src/core/request/constants/request.constant';
-import { ENUM_REQUEST_STATUS_CODE_ERROR } from 'src/core/request/constants/request.status-code.constant';
+import { REQUEST_PARAM_CLASS_DTOS_META_KEY } from '../../../core/request/constants/request.constant';
+import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../../../core/request/constants/request.status-code.constant';
 
 @Injectable()
 export class RequestParamRawGuard implements CanActivate {

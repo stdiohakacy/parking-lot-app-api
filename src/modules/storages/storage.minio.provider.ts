@@ -1,7 +1,7 @@
 import { Client } from 'minio';
 import { IStorage } from './storage.interface';
 import { ConfigService } from '@nestjs/config';
-import { AwsS3Serialization } from 'src/core/aws/serializations/aws.s3.serialization';
+import { AwsS3Serialization } from '../../core/aws/serializations/aws.s3.serialization';
 
 export class MinioStorageProvider implements IStorage {
     private minioClient: Client;

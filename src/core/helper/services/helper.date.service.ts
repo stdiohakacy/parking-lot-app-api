@@ -3,8 +3,8 @@ import moment, { ISO_8601 } from 'moment';
 import {
     ENUM_HELPER_DATE_DIFF,
     ENUM_HELPER_DATE_FORMAT,
-} from 'src/core/helper/constants/helper.enum.constant';
-import { IHelperDateService } from 'src/core/helper/interfaces/helper.date-service.interface';
+} from '../../../core/helper/constants/helper.enum.constant';
+import { IHelperDateService } from '../../../core/helper/interfaces/helper.date-service.interface';
 import {
     IHelperDateExtractDate,
     IHelperDateOptionsBackward,
@@ -15,7 +15,7 @@ import {
     IHelperDateOptionsRoundDown,
     IHelperDateStartAndEnd,
     IHelperDateStartAndEndDate,
-} from 'src/core/helper/interfaces/helper.interface';
+} from '../../../core/helper/interfaces/helper.interface';
 
 @Injectable()
 export class HelperDateService implements IHelperDateService {

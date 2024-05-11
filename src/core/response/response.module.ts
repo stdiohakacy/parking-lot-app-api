@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { ResponseMiddlewareModule } from 'src/core/response/middleware/response.middleware.module';
+import { ResponseMiddlewareModule } from '../../core/response/middleware/response.middleware.module';
 import { ResponseCustomHeadersInterceptor } from './interceptors/response.custom-headers.interceptor';
 
 @Module({

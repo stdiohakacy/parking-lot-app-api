@@ -3,7 +3,7 @@ import { IStorage } from './storage.interface';
 import { S3 } from 'aws-sdk';
 import { ConfigService } from '@nestjs/config';
 import { Readable } from 'stream';
-import { IAwsS3PutItemOptions } from 'src/core/aws/interfaces/aws.interface';
+import { IAwsS3PutItemOptions } from '../../core/aws/interfaces/aws.interface';
 
 @Injectable()
 export class S3StorageProvider implements IStorage {

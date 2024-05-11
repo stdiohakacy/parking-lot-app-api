@@ -6,7 +6,7 @@ import {
     UserPublicRegisterDoc,
 } from '../docs/user.public.doc';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
-import { Response } from 'src/core/response/decorators/response.decorator';
+import { Response } from '../../../core/response/decorators/response.decorator';
 import { UserLoginSerialization } from '../serializations/user.login.serialization';
 import { UserLoginDTO } from '../dtos/user.login.dto';
 import { UserService } from '../services/user.service';
@@ -19,6 +19,7 @@ export class UserPublicController {
 
     @UserPublicRegisterDoc()
     @Response('user.register')
+    @HttpCode(HttpStatus.CREATED)
     @Post('/register')
     async register(@Body() payload: UserRegisterDTO) {
         return await this.userService.register(payload);

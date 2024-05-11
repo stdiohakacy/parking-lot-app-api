@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IMessage } from 'src/core/message/interfaces/message.interface';
+import { IMessage } from '../../../core/message/interfaces/message.interface';
 
 export class ResponseMetadataSerialization {
     languages: string[];

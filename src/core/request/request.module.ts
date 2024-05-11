@@ -6,9 +6,9 @@ import {
     ValidationPipe,
 } from '@nestjs/common';
 import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { RequestTimeoutInterceptor } from 'src/core/request/interceptors/request.timeout.interceptor';
-import { RequestMiddlewareModule } from 'src/core/request/middleware/request.middleware.module';
-import { MobileNumberAllowedConstraint } from 'src/core/request/validations/request.mobile-number-allowed.validation';
+import { RequestTimeoutInterceptor } from '../../core/request/interceptors/request.timeout.interceptor';
+import { RequestMiddlewareModule } from '../../core/request/middleware/request.middleware.module';
+import { MobileNumberAllowedConstraint } from '../../core/request/validations/request.mobile-number-allowed.validation';
 import { ENUM_REQUEST_STATUS_CODE_ERROR } from './constants/request.status-code.constant';
 import { IsPasswordMediumConstraint } from './validations/request.is-password-medium.validation';
 import { IsPasswordStrongConstraint } from './validations/request.is-password-strong.validation';
@@ -16,19 +16,19 @@ import { IsPasswordWeakConstraint } from './validations/request.is-password-weak
 import { IsStartWithConstraint } from './validations/request.is-start-with.validation';
 import { IsOnlyDigitsConstraint } from './validations/request.only-digits.validation';
 import { SafeStringConstraint } from './validations/request.safe-string.validation';
-import { MaxBinaryFileConstraint } from 'src/core/request/validations/request.max-binary-file.validation';
+import { MaxBinaryFileConstraint } from '../../core/request/validations/request.max-binary-file.validation';
 import {
     ThrottlerGuard,
     ThrottlerModule,
     ThrottlerModuleOptions,
 } from '@nestjs/throttler';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DateLessThanEqualTodayConstraint } from 'src/core/request/validations/request.date-less-than-equal-today.validation';
-import { DateGreaterThanEqualTodayConstraint } from 'src/core/request/validations/request.date-greater-than-equal-today.validation';
-import { GreaterThanEqualConstraint } from 'src/core/request/validations/request.greater-than-equal.validation';
-import { GreaterThanConstraint } from 'src/core/request/validations/request.greater-than.validation';
-import { LessThanEqualConstraint } from 'src/core/request/validations/request.less-than-equal.validation';
-import { LessThanConstraint } from 'src/core/request/validations/request.less-than.validation';
+import { DateLessThanEqualTodayConstraint } from '../../core/request/validations/request.date-less-than-equal-today.validation';
+import { DateGreaterThanEqualTodayConstraint } from '../../core/request/validations/request.date-greater-than-equal-today.validation';
+import { GreaterThanEqualConstraint } from '../../core/request/validations/request.greater-than-equal.validation';
+import { GreaterThanConstraint } from '../../core/request/validations/request.greater-than.validation';
+import { LessThanEqualConstraint } from '../../core/request/validations/request.less-than-equal.validation';
+import { LessThanConstraint } from '../../core/request/validations/request.less-than.validation';
 
 @Module({
     controllers: [],

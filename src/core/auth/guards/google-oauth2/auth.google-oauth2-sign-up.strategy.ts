@@ -3,7 +3,7 @@ import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Profile } from 'passport';
-import { IAuthGooglePayload } from 'src/core/auth/interfaces/auth.interface';
+import { IAuthGooglePayload } from '../../../../core/auth/interfaces/auth.interface';
 
 @Injectable()
 export class AuthGoogleOAuth2SignUpStrategy extends PassportStrategy(

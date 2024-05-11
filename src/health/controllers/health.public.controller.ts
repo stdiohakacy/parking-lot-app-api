@@ -6,11 +6,11 @@ import {
     HealthCheckService,
     MemoryHealthIndicator,
 } from '@nestjs/terminus';
-import { Response } from 'src/core/response/decorators/response.decorator';
-import { IResponse } from 'src/core/response/interfaces/response.interface';
-import { HealthCheckDoc } from 'src/health/docs/health.doc';
-import { HealthAwsS3Indicator } from 'src/health/indicators/health.aws-s3.indicator';
-import { HealthSerialization } from 'src/health/serializations/health.serialization';
+import { Response } from '../../core/response/decorators/response.decorator';
+import { IResponse } from '../../core/response/interfaces/response.interface';
+import { HealthCheckDoc } from '../../health/docs/health.doc';
+import { HealthAwsS3Indicator } from '../../health/indicators/health.aws-s3.indicator';
+import { HealthSerialization } from '../../health/serializations/health.serialization';
 
 @ApiTags('health')
 @Controller({

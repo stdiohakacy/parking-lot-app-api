@@ -1,4 +1,4 @@
-import { ENUM_AUTH_LOGIN_WITH } from 'src/core/auth/constants/auth.enum.constant';
+import { ENUM_AUTH_LOGIN_WITH } from '../../../core/auth/constants/auth.enum.constant';
 
 // Auth
 export interface IAuthPassword {

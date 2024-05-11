@@ -1,4 +1,4 @@
-import { IHelperArrayRemove } from 'src/core/helper/interfaces/helper.interface';
+import { IHelperArrayRemove } from '../../../core/helper/interfaces/helper.interface';
 
 export interface IHelperArrayService {
     getCombinations<T>(

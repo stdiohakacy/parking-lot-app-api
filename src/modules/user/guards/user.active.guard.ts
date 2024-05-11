@@ -5,10 +5,10 @@ import {
     BadRequestException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { USER_ACTIVE_META_KEY } from 'src/modules/user/constants/user.constant';
-import { ENUM_USER_STATUS_CODE_ERROR } from 'src/modules/user/constants/user.status-code.constant';
+import { USER_ACTIVE_META_KEY } from '../../../modules/user/constants/user.constant';
+import { ENUM_USER_STATUS_CODE_ERROR } from '../../../modules/user/constants/user.status-code.constant';
 import { UserEntity } from '../entities/user.entity';
-import { IRequestApp } from 'src/core/request/interfaces/request.interface';
+import { IRequestApp } from '../../../core/request/interfaces/request.interface';
 
 @Injectable()
 export class UserActiveGuard implements CanActivate {

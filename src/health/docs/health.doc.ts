@@ -3,8 +3,8 @@ import {
     Doc,
     DocAuth,
     DocResponse,
-} from 'src/core/doc/decorators/doc.decorator';
-import { HealthSerialization } from 'src/health/serializations/health.serialization';
+} from '../../core/doc/decorators/doc.decorator';
+import { HealthSerialization } from '../../health/serializations/health.serialization';
 
 export function HealthCheckDoc(): MethodDecorator {
     return applyDecorators(

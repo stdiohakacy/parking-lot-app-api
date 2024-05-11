@@ -1,8 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
 import { ApiParamOptions, ApiQueryOptions } from '@nestjs/swagger';
 import { ClassConstructor } from 'class-transformer';
-import { ENUM_DOC_REQUEST_BODY_TYPE } from 'src/core/doc/constants/doc.enum.constant';
-import { ENUM_FILE_EXCEL_MIME } from 'src/core/file/constants/file.enum.constant';
+import { ENUM_DOC_REQUEST_BODY_TYPE } from '../../../core/doc/constants/doc.enum.constant';
+import { ENUM_FILE_EXCEL_MIME } from '../../../core/file/constants/file.enum.constant';
 
 export interface IDocOptions {
     operation?: string;

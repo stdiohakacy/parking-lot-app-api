@@ -16,7 +16,7 @@ import {
     UserAuthRefreshDoc,
     UserAuthUploadProfileDoc,
 } from '../docs/user.auth.doc';
-import { Response } from 'src/core/response/decorators/response.decorator';
+import { Response } from '../../../core/response/decorators/response.decorator';
 import { UserProfileSerialization } from '../serializations/user.profile.serialization';
 import {
     GetUser,
@@ -27,17 +27,17 @@ import {
     AuthJwtAccessProtected,
     AuthJwtRefreshProtected,
     AuthJwtToken,
-} from 'src/core/auth/decorators/auth.jwt.decorator';
+} from '../../../core/auth/decorators/auth.jwt.decorator';
 import { UserEntity } from '../entities/user.entity';
-import { IResponse } from 'src/core/response/interfaces/response.interface';
+import { IResponse } from '../../../core/response/interfaces/response.interface';
 import { UserRefreshSerialization } from '../serializations/user.refresh.serialization';
-import { AuthService } from 'src/core/auth/services/auth.service';
+import { AuthService } from '../../../core/auth/services/auth.service';
 import { UserChangePasswordDTO } from '../dtos/user.change-password.dto';
-import { UploadFileSingle } from 'src/core/file/decorators/file.decorator';
-import { FileRequiredPipe } from 'src/core/file/pipes/file.required.pipe';
-import { FileSizeImagePipe } from 'src/core/file/pipes/file.size.pipe';
-import { FileTypeImagePipe } from 'src/core/file/pipes/file.type.pipe';
-import { IFile } from 'src/core/file/interfaces/file.interface';
+import { UploadFileSingle } from '../../../core/file/decorators/file.decorator';
+import { FileRequiredPipe } from '../../../core/file/pipes/file.required.pipe';
+import { FileSizeImagePipe } from '../../../core/file/pipes/file.size.pipe';
+import { FileTypeImagePipe } from '../../../core/file/pipes/file.type.pipe';
+import { IFile } from '../../../core/file/interfaces/file.interface';
 
 @ApiTags('modules.auth.user')
 @Controller({ version: '1', path: '/user' })

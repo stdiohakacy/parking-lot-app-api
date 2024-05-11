@@ -1,9 +1,9 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
-import { AuthJwtAccessGuard } from 'src/core/auth/guards/jwt-access/auth.jwt-access.guard';
-import { AuthJwtRefreshGuard } from 'src/core/auth/guards/jwt-refresh/auth.jwt-refresh.guard';
+import { AuthJwtAccessGuard } from '../../../core/auth/guards/jwt-access/auth.jwt-access.guard';
+import { AuthJwtRefreshGuard } from '../../../core/auth/guards/jwt-refresh/auth.jwt-refresh.guard';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { IRequestApp } from 'src/core/request/interfaces/request.interface';
-import { UserPayloadSerialization } from 'src/modules/user/serializations/user.payload.serialization';
+import { IRequestApp } from '../../../core/request/interfaces/request.interface';
+import { UserPayloadSerialization } from '../../../modules/user/serializations/user.payload.serialization';
 
 export const AuthJwtPayload = createParamDecorator(
     (data: string, ctx: ExecutionContext): Record<string, any> => {

@@ -4,21 +4,21 @@ import {
     SetMetadata,
     UseInterceptors,
 } from '@nestjs/common';
-import { ENUM_HELPER_FILE_TYPE } from 'src/core/helper/constants/helper.enum.constant';
+import { ENUM_HELPER_FILE_TYPE } from '../../../core/helper/constants/helper.enum.constant';
 import {
     RESPONSE_FILE_TYPE_META_KEY,
     RESPONSE_MESSAGE_PATH_META_KEY,
     RESPONSE_MESSAGE_PROPERTIES_META_KEY,
     RESPONSE_SERIALIZATION_META_KEY,
-} from 'src/core/response/constants/response.constant';
-import { ResponseDefaultInterceptor } from 'src/core/response/interceptors/response.default.interceptor';
-import { ResponseFileInterceptor } from 'src/core/response/interceptors/response.file.interceptor';
-import { ResponsePagingInterceptor } from 'src/core/response/interceptors/response.paging.interceptor';
+} from '../../../core/response/constants/response.constant';
+import { ResponseDefaultInterceptor } from '../../../core/response/interceptors/response.default.interceptor';
+import { ResponseFileInterceptor } from '../../../core/response/interceptors/response.file.interceptor';
+import { ResponsePagingInterceptor } from '../../../core/response/interceptors/response.paging.interceptor';
 import {
     IResponseOptions,
     IResponsePagingOptions,
     IResponseFileOptions,
-} from 'src/core/response/interfaces/response.interface';
+} from '../../../core/response/interfaces/response.interface';
 
 export function Response<T>(
     messagePath: string,

@@ -1,20 +1,20 @@
 import { Query } from '@nestjs/common';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from 'src/core/pagination/constants/pagination.enum.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../core/pagination/constants/pagination.enum.constant';
 import {
     IPaginationFilterDateOptions,
     IPaginationFilterStringContainOptions,
     IPaginationFilterStringEqualOptions,
-} from 'src/core/pagination/interfaces/pagination.interface';
-import { PaginationFilterContainPipe } from 'src/core/pagination/pipes/pagination.filter-contain.pipe';
-import { PaginationFilterDatePipe } from 'src/core/pagination/pipes/pagination.filter-date.pipe';
-import { PaginationFilterEqualEnumPipe } from 'src/core/pagination/pipes/pagination.filter-equal-enum.pipe';
-import { PaginationFilterEqualObjectIdPipe } from 'src/core/pagination/pipes/pagination.filter-equal-object-id.pipe';
-import { PaginationFilterEqualPipe } from 'src/core/pagination/pipes/pagination.filter-equal.pipe';
-import { PaginationFilterInBooleanPipe } from 'src/core/pagination/pipes/pagination.filter-in-boolean.pipe';
-import { PaginationFilterInEnumPipe } from 'src/core/pagination/pipes/pagination.filter-in-enum.pipe';
-import { PaginationOrderPipe } from 'src/core/pagination/pipes/pagination.order.pipe';
-import { PaginationPagingPipe } from 'src/core/pagination/pipes/pagination.paging.pipe';
-import { PaginationSearchPipe } from 'src/core/pagination/pipes/pagination.search.pipe';
+} from '../../../core/pagination/interfaces/pagination.interface';
+import { PaginationFilterContainPipe } from '../../../core/pagination/pipes/pagination.filter-contain.pipe';
+import { PaginationFilterDatePipe } from '../../../core/pagination/pipes/pagination.filter-date.pipe';
+import { PaginationFilterEqualEnumPipe } from '../../../core/pagination/pipes/pagination.filter-equal-enum.pipe';
+import { PaginationFilterEqualObjectIdPipe } from '../../../core/pagination/pipes/pagination.filter-equal-object-id.pipe';
+import { PaginationFilterEqualPipe } from '../../../core/pagination/pipes/pagination.filter-equal.pipe';
+import { PaginationFilterInBooleanPipe } from '../../../core/pagination/pipes/pagination.filter-in-boolean.pipe';
+import { PaginationFilterInEnumPipe } from '../../../core/pagination/pipes/pagination.filter-in-enum.pipe';
+import { PaginationOrderPipe } from '../../../core/pagination/pipes/pagination.order.pipe';
+import { PaginationPagingPipe } from '../../../core/pagination/pipes/pagination.paging.pipe';
+import { PaginationSearchPipe } from '../../../core/pagination/pipes/pagination.search.pipe';
 
 export function PaginationQuery(
     defaultPerPage: number,
